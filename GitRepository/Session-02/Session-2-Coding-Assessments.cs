@@ -67,7 +67,7 @@ public class Session2
         int timeinseconds = 45678;
         TimeSpan Interval = TimeSpan.FromSeconds(timeinseconds);
         Console.WriteLine("45678 seconds are:");
-        Console.WriteLine((Interval.TotalMinutes) + "Minutes");
+        Console.WriteLine((Interval.TotalMinutes) + " Minutes");
         Console.WriteLine((Interval.TotalHours) + "Hours");
         Console.WriteLine((Interval.TotalDays) + "Days");
         Console.WriteLine((Interval.TotalDays / (float)365) + "Years");
@@ -75,9 +75,9 @@ public class Session2
 
         //7.
         Console.WriteLine("7.");
-        decimal tempc = 27;
-        decimal tempf = tempc * 9 / 5 + 32;
-        decimal tempk = tempc + 273;
+        int tempc = 27;
+        double tempf = tempc * (9 / 5) + 32;
+        double tempk = tempc + 273.15;
         Console.WriteLine("If we have 27 Celsius then:");
         Console.WriteLine("Fahrenheit: "+ tempf);
         Console.WriteLine("Kelvin: "+tempk);
