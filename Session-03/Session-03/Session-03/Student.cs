@@ -12,7 +12,11 @@ namespace Session_03
 
         public Course[] Course { get; set; }
 
-        public void Attend(Course Course, DateTime dateTime)
+        public void Attend(Course course, DateTime dateTime)
+        {
+
+        }
+        public void WriteExam(Course course, DateTime dateTime)
         {
 
         }

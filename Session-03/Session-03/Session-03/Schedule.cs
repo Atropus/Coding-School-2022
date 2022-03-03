@@ -19,7 +19,7 @@ namespace Session_03
 
         public Schedule()
         {
-        
+            ID = Guid.NewGuid();
         }
 
     }
