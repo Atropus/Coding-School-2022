@@ -8,7 +8,15 @@ namespace Session_04
 {
     internal class Class5
     {
+        public void Sort(int[] myArray)
+        {
+            Array.Sort(myArray);
+        }
 
+        public Class5()
+        {
+
+        }
 
     }
 }

@@ -9,12 +9,12 @@ namespace Session_04
     public class Program
     {
         static void Main(string[] args) {
-            
+
             string es = string.Empty;
             //1.
             Console.WriteLine("1.");
             string myName = "Mantikidis Dimitris";
-            Console.WriteLine("My name is: "+ myName);
+            Console.WriteLine("My name is: " + myName);
             Console.WriteLine("In Reverse it is: " + Class1.ReverseString(myName));
 
             //2. 
@@ -37,40 +37,21 @@ namespace Session_04
             Console.WriteLine("It is a prime :" + c3.IsPrime(n3));
 
             //4.
+            Console.WriteLine("4.");
             int[] Array1 = { 2, 4, 9, 12 };
             int[] Array2 = { 1, 3, 7, 10 };
             var c4 = new Class4();
             c4.ArrayNew(Array1, Array2);
 
-
-            //int inputNumber = Convert.ToInt32(inputNumber);
-            //c2 = Convert.ToString(Console.ReadLine());
-            //Console.WriteLine(Class2.GetSum(c2));
-            //string format2 = $"the sum of {i3} and {i4} is {i4 + i3}";
-
-            //string myString = Convert.ToString(n);
-
-
-            //string number = Console.ReadLine();
-            //var c2 = new Class2();
-            //Console.WriteLine();
-
-
-            //int inputNumber = 1;
-            //Console.WriteLine("3.");
-            //Console.WriteLine("Enter any number: ");
-            // inputNumber = Convert.ToInt32(Console.ReadLine());
-            //Console.WriteLine("Product of digits = " + Class3.GetProduct(inputNumber);
-
-            //4.
-
-
-
-
-
-
-
+            //5.
+            int[] myArray = new int[10] { 0, -2, 1, 20, -31, 50, -4, 17, 89, 100 };
+            var c5 = new Class5();
+            c5.Sort(myArray);
+            for (int i=0; i<myArray.Length; i++)    
+                Console.Write($"{myArray[i]} ");
+            
             Console.ReadLine();
+
         }
 
     }
