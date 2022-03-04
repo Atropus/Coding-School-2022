@@ -34,7 +34,14 @@ namespace Session_04
             string inputNumber3 = Console.ReadLine();
             var c3 = new Class3();
             int n3 = Convert.ToInt32(inputNumber3);
-            Console.WriteLine("The Prime Numbers are :" + c3.IsPrime(n3));
+            Console.WriteLine("It is a prime :" + c3.IsPrime(n3));
+
+            //4.
+            int[] Array1 = { 2, 4, 9, 12 };
+            int[] Array2 = { 1, 3, 7, 10 };
+            var c4 = new Class4();
+            c4.ArrayNew(Array1, Array2);
+
 
             //int inputNumber = Convert.ToInt32(inputNumber);
             //c2 = Convert.ToString(Console.ReadLine());
