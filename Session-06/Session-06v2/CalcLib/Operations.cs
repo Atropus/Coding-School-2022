@@ -1,15 +1,7 @@
 ﻿namespace CalcLib
 {
-    public class Operations
+    public static class Operations 
     {
-        public Operations()
-        {
 
-        }
-
-        public string Add()
-        {
-            public
-        }
     }
 }
