@@ -102,6 +102,7 @@ namespace Session_06v2
                 }
 
                 textBox1.Text = textBox1.Text + btn.Text;
+                textBox2.Text = textBox2.Text + btn.Text;
             }
         }
 
@@ -142,11 +143,14 @@ namespace Session_06v2
                     break;
             }
             textBox1.Text = result.ToString();
+            //textBox2.Text = TODO
         }
 
 
         private void button5_Click(object sender, EventArgs e)
         {
+            Button btn = (Button)sender;
+            textBox2.Text = textBox2.Text + btn.Text;
             SaveValueAndOperatorType((int)MathOperations.Divide);
         }
 
@@ -157,16 +161,22 @@ namespace Session_06v2
 
         private void button9_Click(object sender, EventArgs e)
         {
+            Button btn = (Button)sender;
+            textBox2.Text = textBox2.Text + btn.Text;
             SaveValueAndOperatorType((int)MathOperations.Multiply);
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
+            Button btn = (Button)sender;
+            textBox2.Text = textBox2.Text + btn.Text;
             SaveValueAndOperatorType((int)MathOperations.Minus);
         }
 
         private void button17_Click(object sender, EventArgs e)
         {
+            Button btn = (Button)sender;
+            textBox2.Text = textBox2.Text + btn.Text;
             SaveValueAndOperatorType((int)MathOperations.add);
         }
     }
