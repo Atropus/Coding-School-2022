@@ -36,5 +36,12 @@ namespace Session78
         {
 
         }
+
+        private void btnProfessorNew_Click(object sender, EventArgs e)
+        {
+            //Person person = CreatePerson();
+        }
+
+
     }
 }

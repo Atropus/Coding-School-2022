@@ -15,6 +15,7 @@ namespace Session_7_8
 {
     public partial class UnivercityForm : DevExpress.XtraEditors.XtraForm
     {
+        //DO I need more storage files?
         private const string PROFESSOR_DATA = "UniversityStorage.json";
         
         private Person.Person _person;

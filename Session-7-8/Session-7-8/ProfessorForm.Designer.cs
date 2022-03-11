@@ -87,6 +87,7 @@
             this.btnProfessorNew.Size = new System.Drawing.Size(75, 44);
             this.btnProfessorNew.TabIndex = 5;
             this.btnProfessorNew.Text = "New...";
+            this.btnProfessorNew.Click += new System.EventHandler(this.btnProfessorNew_Click);
             // 
             // btnProfessorDelete
             // 
@@ -111,7 +112,7 @@
             this.btnProfessorClose.Name = "btnProfessorClose";
             this.btnProfessorClose.Size = new System.Drawing.Size(75, 44);
             this.btnProfessorClose.TabIndex = 8;
-            this.btnProfessorClose.Text = "simpleButton4";
+            this.btnProfessorClose.Text = "Close";
             // 
             // ProfessorForm
             // 

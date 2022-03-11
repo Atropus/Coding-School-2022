@@ -13,16 +13,16 @@
             Age = 0;
         }
 
-    //[Serializable]
-    //public class Professors
-    //    {
-    //        public List <Person>? Profs { get; set; }
+        //[Serializable]
+        //public class Professors
+        //    {
+        //        public List <Person>? Profs { get; set; }
 
-    //        public Professors()
-    //        {
+        //        public Professors()
+        //        {
 
-    //        }
-    //    }
+        //        }
+        //    }
         //public class PersonManager : Person
         //{
         //    public List<Person> People { get; set; }
