@@ -19,7 +19,8 @@ public class Person : CurrentStatus, IPerson
     public string Name { get; set; }
     public string Surname { get; set; }
     public string Fullname { get => $"{Name} {Surname}"; }//oxi mesa edo
-
+    [MaxLength(200)]
+    public bool Finished { get; set; }
     public Person()
     {
 

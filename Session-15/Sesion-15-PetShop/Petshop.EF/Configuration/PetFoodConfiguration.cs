@@ -20,6 +20,7 @@ namespace Petshop.EF.Configuration
             builder.Property(petfood => petfood.Cost).HasMaxLength(20);
             builder.Property(petfood => petfood.Type).HasMaxLength(60);
             builder.Property(petfood => petfood.Brand).HasMaxLength(60);
+            builder.HasIndex(petfood => petfood.Finished);
 
         }
     }

@@ -1,8 +1,9 @@
 ﻿using System;
-
+using System.ComponentModel.DataAnnotations;
 
 public class Customer : Person
 {
+    [Required]
     public string PhoneNumber { get; set; }
     public string Tin { get; set; }
 

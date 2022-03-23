@@ -1,5 +1,6 @@
 ﻿using PetShopLibrary;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 public enum FoodType
 {
@@ -20,6 +21,7 @@ public interface IFood
 
 public class PetFood : Product, IFood
 {
+    [Required]
     public FoodType Type { get; set; }
 
     public string Brand { get; set; }

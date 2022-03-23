@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 public enum EmployeeType
 {
@@ -14,6 +15,7 @@ public interface IEmployee
 }
 public class Employee : Person, IEmployee
 {
+	[Required]
 	public decimal Salary { get; set; }
 	public EmployeeType EmpType { get; set; }
 

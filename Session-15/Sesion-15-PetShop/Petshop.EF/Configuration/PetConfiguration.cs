@@ -15,13 +15,14 @@ namespace Petshop.EF.Configuration
             //TODO na do pws tha doulepsei to GUID
             builder.ToTable("Pet");
             builder.HasKey(pet => pet.ID);
-            builder.Property(employee => employee.ID).HasMaxLength(36);
+            builder.Property(Pet => Pet.ID).HasMaxLength(36);
             builder.Property(pet => pet.Price).HasMaxLength(20);
             builder.Property(pet => pet.Cost).HasMaxLength(20);
             //builder.Property(pet => pet.FoodType);
             builder.Property(pet => pet.HealthStatus).HasMaxLength(60);
             builder.Property(pet => pet.AnimalType).HasMaxLength(60);
             builder.Property(pet => pet.Breed).HasMaxLength(60);
+            builder.HasIndex(pet => pet.Finished);
 
         }
     }

@@ -26,6 +26,7 @@ namespace Petshop.EF.Configuration
             builder.Property(transaction => transaction.PetFoodQty).HasMaxLength(20);
             builder.Property(transaction => transaction.PetFoodPrice).HasMaxLength(100);
             builder.Property(transaction => transaction.TotalPrice).HasMaxLength(100);
+            builder.HasIndex(transaction => transaction.Finished);
 
         }
     }

@@ -1,7 +1,6 @@
 ﻿using PetShopLibrary;
 using System;
-
-
+using System.ComponentModel.DataAnnotations;
 
 public enum AnimalType
 {
@@ -36,6 +35,7 @@ public interface IPet
 
 public class Pet : Product, IPet 
 {
+    [Required]
     public PetFood FoodType { get; set; }
     public PetStatus HealthStatus { get; set; }
     public AnimalType AnimalType { get; set; }
