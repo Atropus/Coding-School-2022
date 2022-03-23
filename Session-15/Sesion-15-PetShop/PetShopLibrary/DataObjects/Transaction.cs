@@ -1,4 +1,6 @@
-﻿namespace PetShopLibrary
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PetShopLibrary
 {
     public interface ITransaction
     {
@@ -17,6 +19,7 @@
 
     public class Transaction : ITransaction
     {
+        [Required]
         public Guid ID { get; }
         public DateTime Date { get; }
         public Guid CustomerID { get; set; }

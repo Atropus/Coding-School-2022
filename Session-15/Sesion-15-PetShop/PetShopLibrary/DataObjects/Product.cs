@@ -1,4 +1,5 @@
 ﻿using PetShopLibrary.DataObjects;
+using System.ComponentModel.DataAnnotations;
 
 namespace PetShopLibrary
 {
@@ -17,6 +18,7 @@ namespace PetShopLibrary
     {
         public decimal Price { get; set; }
         public decimal Cost { get; set; }
+        [Required]
         public Guid ID { get; set; }
 
         public Product()

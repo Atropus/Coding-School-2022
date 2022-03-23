@@ -1,7 +1,6 @@
 ﻿using PetShopLibrary.DataObjects;
 using System;
-
-
+using System.ComponentModel.DataAnnotations;
 
 public interface IPerson
 {
@@ -15,6 +14,7 @@ public interface IPerson
 
 public class Person : CurrentStatus, IPerson
 { 
+    [Required]
     public Guid ID { get; set; } =  Guid.NewGuid();
     public string Name { get; set; }
     public string Surname { get; set; }
@@ -29,5 +29,6 @@ public class Person : CurrentStatus, IPerson
     {
         Name = name;
         Surname = surname;
+
     }
 }
