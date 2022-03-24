@@ -22,7 +22,7 @@ namespace Petshop.EF.Configuration
             builder.Property(pet => pet.HealthStatus).HasMaxLength(60);
             builder.Property(pet => pet.AnimalType).HasMaxLength(60);
             builder.Property(pet => pet.Breed).HasMaxLength(60);
-            builder.HasIndex(pet => pet.Finished);
+            
 
         }
     }

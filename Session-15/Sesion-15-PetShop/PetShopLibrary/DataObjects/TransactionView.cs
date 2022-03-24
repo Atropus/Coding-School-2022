@@ -33,10 +33,7 @@ namespace PetShopLibrary.DataObjects
                         };
         }
 
-        private Guid FindEmployee(string id) 
-        {
-            return _petShop.GetEmployees().Find(x => x.ID.Equals(id)).ID;   
-        }
+
 
     }
 }

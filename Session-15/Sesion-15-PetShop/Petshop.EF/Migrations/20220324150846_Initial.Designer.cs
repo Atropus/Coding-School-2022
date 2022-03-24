@@ -12,7 +12,7 @@ using Petshop.EF;
 namespace Petshop.EF.Migrations
 {
     [DbContext(typeof(PetShopContext))]
-    [Migration("20220323142703_Initial")]
+    [Migration("20220324150846_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -210,6 +210,13 @@ namespace Petshop.EF.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CustomerID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.HasIndex("PetID")
+                        .IsUnique();
+
                     b.ToTable("Transaction", (string)null);
                 });
 
@@ -222,6 +229,43 @@ namespace Petshop.EF.Migrations
                         .IsRequired();
 
                     b.Navigation("FoodType");
+                });
+
+            modelBuilder.Entity("PetShopLibrary.Transaction", b =>
+                {
+                    b.HasOne("Customer", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Employee", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Pet", null)
+                        .WithOne("Transactions")
+                        .HasForeignKey("PetShopLibrary.Transaction", "PetID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Customer", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Employee", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Pet", b =>
+                {
+                    b.Navigation("Transactions")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

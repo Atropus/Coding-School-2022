@@ -29,10 +29,6 @@ namespace Petshop.EF.Migrations
                         .HasMaxLength(36)
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Finished")
-                        .HasMaxLength(200)
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -58,8 +54,6 @@ namespace Petshop.EF.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Finished");
-
                     b.ToTable("Customer", (string)null);
                 });
 
@@ -73,10 +67,6 @@ namespace Petshop.EF.Migrations
                     b.Property<int>("EmpType")
                         .HasMaxLength(20)
                         .HasColumnType("int");
-
-                    b.Property<bool>("Finished")
-                        .HasMaxLength(200)
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -96,8 +86,6 @@ namespace Petshop.EF.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("Finished");
 
                     b.ToTable("Employee", (string)null);
                 });
@@ -122,10 +110,6 @@ namespace Petshop.EF.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("Finished")
-                        .HasMaxLength(200)
-                        .HasColumnType("bit");
-
                     b.Property<Guid>("FoodTypeID")
                         .HasColumnType("uniqueidentifier");
 
@@ -141,8 +125,6 @@ namespace Petshop.EF.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("Finished");
 
                     b.HasIndex("FoodTypeID");
 
@@ -165,10 +147,6 @@ namespace Petshop.EF.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("Finished")
-                        .HasMaxLength(200)
-                        .HasColumnType("bit");
-
                     b.Property<int>("ObjectStatus")
                         .HasColumnType("int");
 
@@ -181,8 +159,6 @@ namespace Petshop.EF.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("Finished");
 
                     b.ToTable("PetFood", (string)null);
                 });
@@ -205,10 +181,6 @@ namespace Petshop.EF.Migrations
                     b.Property<Guid>("EmployeeID")
                         .HasMaxLength(36)
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Finished")
-                        .HasMaxLength(200)
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("PetFoodID")
                         .HasMaxLength(36)
@@ -236,7 +208,12 @@ namespace Petshop.EF.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Finished");
+                    b.HasIndex("CustomerID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.HasIndex("PetID")
+                        .IsUnique();
 
                     b.ToTable("Transaction", (string)null);
                 });
@@ -250,6 +227,43 @@ namespace Petshop.EF.Migrations
                         .IsRequired();
 
                     b.Navigation("FoodType");
+                });
+
+            modelBuilder.Entity("PetShopLibrary.Transaction", b =>
+                {
+                    b.HasOne("Customer", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Employee", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Pet", null)
+                        .WithOne("Transactions")
+                        .HasForeignKey("PetShopLibrary.Transaction", "PetID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Customer", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Employee", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Pet", b =>
+                {
+                    b.Navigation("Transactions")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -21,8 +21,7 @@ namespace PetShopLibrary
         public decimal Cost { get; set; }
         [Required]
         public Guid ID { get; set; }
-        [MaxLength(200)]
-        public bool Finished { get; set; }
+
 
         public Product()
         {

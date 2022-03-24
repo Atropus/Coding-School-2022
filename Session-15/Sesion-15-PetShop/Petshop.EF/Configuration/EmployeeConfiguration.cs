@@ -20,7 +20,7 @@ namespace Petshop.EF.Configuration
             builder.Property(employee => employee.Surname).HasMaxLength(60);
             builder.Property(employee => employee.EmpType).HasMaxLength(20);
             builder.Property(employee => employee.Salary).HasMaxLength(20);
-            builder.HasIndex(employee => employee.Finished);
+            
 
         }
     }

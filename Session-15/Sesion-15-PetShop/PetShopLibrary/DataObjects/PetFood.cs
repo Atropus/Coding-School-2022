@@ -25,6 +25,7 @@ public class PetFood : Product, IFood
     public FoodType Type { get; set; }
 
     public string Brand { get; set; }
+    //public Transaction Transactions { get; set; }
 
     public PetFood()
     {

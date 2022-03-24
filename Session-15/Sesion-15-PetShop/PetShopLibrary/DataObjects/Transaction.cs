@@ -30,8 +30,7 @@ namespace PetShopLibrary
         public int PetFoodQty { get; set; }
         public decimal PetFoodPrice { get; set; }
         public decimal TotalPrice { get; set; }
-        [MaxLength(200)]
-        public bool Finished { get; set; }
+
 
 
         public Transaction()

@@ -20,7 +20,6 @@ namespace Petshop.EF.Configuration
             builder.Property(customer => customer.Surname).HasMaxLength(100);
             builder.Property(customer => customer.Tin).HasMaxLength(20);
             builder.Property(customer => customer.PhoneNumber).HasMaxLength(20);
-            builder.HasIndex(customer => customer.Finished);
             
         }
     }
