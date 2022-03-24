@@ -54,7 +54,7 @@ namespace Session_11
                 };
                 
                 _petShopManager.Add(emp);
-                _petShopManager.Save();
+                //_petShopManager.Save();
                 this.Close();
             }
             else

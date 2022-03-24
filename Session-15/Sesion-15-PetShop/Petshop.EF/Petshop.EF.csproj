@@ -18,8 +18,4 @@
     <ProjectReference Include="..\PetShopLibrary\PetShopLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

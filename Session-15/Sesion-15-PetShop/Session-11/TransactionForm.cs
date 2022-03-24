@@ -184,12 +184,12 @@ namespace Session_11
             int qty = int.Parse(spinPetFoodQty.Value.ToString());
             decimal foodPrice = _currentPet.FoodType.Price;
 
-            TransactionView transView = new TransactionView(_petShop);
-            Transaction transaction = transView.CreateView(user, custId, petId, petPrice, foodId, qty, foodPrice, _total);
-            _petShop.Add(transaction);
-            _petShop.Delete(_currentPet);
-            _petShop.DeletePetFoodRange(_currentPet.FoodType.Brand, qty);
-            _petShop.Save();
+            //TransactionView transView = new TransactionView(_petShop);
+            //Transaction transaction = transView.CreateView(user, custId, petId, petPrice, foodId, qty, foodPrice, _total);
+            //_petShop.Add(transaction);
+            //_petShop.Delete(_currentPet);
+            //_petShop.DeletePetFoodRange(_currentPet.FoodType.Brand, qty);
+            //_petShop.Save();
 
             grvTransaction.RefreshData();
             MessageBox.Show("Transaction successfully Completed!");

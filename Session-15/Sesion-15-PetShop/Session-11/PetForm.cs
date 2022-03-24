@@ -51,13 +51,13 @@ namespace Session_11
             Pet pet= grvPets.GetFocusedRow() as Pet;
             if (pet == null) return;
             _petShop.Delete(pet);
-            _petShop.Save();
+
             grvPets.RefreshData();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            _petShop.Save();
+            //_petShop.Save();
             MessageBox.Show("Saved");
             
         }

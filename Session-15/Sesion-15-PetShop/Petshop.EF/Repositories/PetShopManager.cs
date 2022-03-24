@@ -1,4 +1,5 @@
-﻿using PetShopLibrary.DataObjects;
+﻿using Petshop.EF;
+using PetShopLibrary.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,61 +19,83 @@ namespace PetShopLibrary
             Load();
         }
 
-        public PetShopManager(PetShop petShop)
-        {
-            _petShop = petShop;
-        }
 
         public void Load()
         {
-            if (File.Exists(FILE_NAME))
-            {
-                string text = File.ReadAllText(FILE_NAME, Encoding.UTF8);
-                _petShop = JsonSerializer.Deserialize<PetShop>(text);
-                return;
-            }
+            //if (File.Exists(FILE_NAME))
+            //{
+            //    string text = File.ReadAllText(FILE_NAME, Encoding.UTF8);
+            //    _petShop = JsonSerializer.Deserialize<PetShop>(text);
+            //    return;
+            //}
 
             _petShop = new PetShop();
-            
+            using var context = new PetShopContext();
+            _petShop.Customers = context.Customers.ToList<Customer>();
+            _petShop.Employees = context.Employees.ToList<Employee>();
+            _petShop.Pets = context.Pets.ToList<Pet>();
+            _petShop.PetFoods = context.PetsFood.ToList<PetFood>();
+            _petShop.Transactions = context.Transactions.ToList<Transaction>();
+
         }
 
-        public void Save()
+        public void Save(PetShopContext context)
         {
-            string json = JsonSerializer.Serialize(_petShop);
-            File.WriteAllText(FILE_NAME, json);
+            
+            context.SaveChanges();
+            //string json = JsonSerializer.Serialize(_petShop);
+            //File.WriteAllText(FILE_NAME, json);
+
         }
 
         public void Delete(Customer customer) 
         {
-            customer.ObjectStatus = DataObjects.Status.Inactive;
+            using var context = new PetShopContext();
+            Customer cust = (Customer)context.Customers.Where<Customer>(x => x.ID == customer.ID);
+            if (cust is not null) return;
+            cust.ObjectStatus = DataObjects.Status.Inactive;
+            Save(context);
         }
 
         public void Delete(Employee employee)
         {
-            employee.ObjectStatus = DataObjects.Status.Inactive;
+            using var context = new PetShopContext();
+            Employee cust = (Employee)context.Employees.Where<Employee>(x => x.ID == employee.ID);
+            if (cust is not null) return;
+            cust.ObjectStatus = DataObjects.Status.Inactive;
+            Save(context);
         }
 
         public void Delete(Pet pet)
         {
-            pet.ObjectStatus = DataObjects.Status.Inactive;
+            using var context = new PetShopContext();
+            Pet cust = (Pet)context.Pets.Where<Pet>(x => x.ID == pet.ID);
+            if (cust is not null) return;
+            cust.ObjectStatus = DataObjects.Status.Inactive;
+            Save(context);
         }
 
 
         public void Delete(PetFood petFood)
         {
-            petFood.ObjectStatus = DataObjects.Status.Inactive;
+            using var context = new PetShopContext();
+            PetFood cust = (PetFood)context.PetsFood.Where<PetFood>(x => x.ID == petFood.ID);
+            if (cust is not null) return;
+            cust.ObjectStatus = DataObjects.Status.Inactive;
+            Save(context);
         }
 
-        public void DeletePetFoodRange(string brand, int qty)
-        {
-            if(qty == 0) return;
+        //public void DeletePetFoodRange(string brand, int qty)
+        //{
+        //    if(qty == 0) return;
 
-            List<PetFood> petFoods = GetPetFoods().FindAll(x => x.Brand.Equals(brand) && x.ObjectStatus.Equals(Status.Active)).Take(qty).ToList();
-            foreach(PetFood food in petFoods)
-            {
-                Delete(food);
-            }
-        }
+        //    List<PetFood> petFoods = GetPetFoods().FindAll(x => x.Brand.Equals(brand) && x.ObjectStatus.Equals(Status.Active)).Take(qty).ToList();
+        //    foreach(PetFood food in petFoods)
+        //    {
+        //        Delete(food);
+        //    }
+            
+        //}
 
 
         public List<Customer> GetCustomers()
@@ -102,27 +125,43 @@ namespace PetShopLibrary
 
         public void Add(Customer customer)
         {
+            using var context = new PetShopContext();
+            context.Customers.Add(customer);
             _petShop.Customers.Add(customer);
+            Save(context);
+
         }
 
         public void Add(Employee employee)
         {
+            using var context = new PetShopContext();
+            context.Employees.Add(employee);
             _petShop.Employees.Add(employee);
+            Save(context);
         }
 
         public void Add(Pet pet)
         {
+            using var context = new PetShopContext();
+            context.Pets.Add(pet);
             _petShop.Pets.Add(pet);
+            Save(context);
         }
 
         public void Add(Transaction transaction)
         {
+            using var context = new PetShopContext();
+            context.Transactions.Add(transaction);
             _petShop.Transactions.Add(transaction);
+            Save(context);
         }
 
         public void Add(PetFood petFood)
         {
+            using var context = new PetShopContext();
+            context.PetsFood.Add(petFood);
             _petShop.PetFoods.Add(petFood);
+            Save(context);
         }
 
         public PetFood? GetFood(AnimalType type, string brand)

@@ -300,7 +300,7 @@ namespace Session_11
         private void SaveCustomer()
         {
 
-            _petshopManager.Save();
+            //_petshopManager.Save();
 
 
         }
@@ -350,7 +350,7 @@ namespace Session_11
                 var x = new PetShopManager();
                 CustomerList = x.GetCustomers();
                 gridCustomerList.Refresh();
-                x.Save();
+                //x.Save();
                 _petshopManager.Load();
 
 

@@ -6,7 +6,7 @@ namespace Petshop.EF
 {
     public class PetShopContext : DbContext
     {
-        public DbSet<Employee> Customers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Pet> Pets { get; set; }
         public DbSet<PetFood> PetsFood { get; set; }
@@ -24,7 +24,7 @@ namespace Petshop.EF
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            var connString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=DbSession15-Petshop;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            var connString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=DbSession15-Petshop;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=True";
             optionsBuilder.UseSqlServer(connString);
         }
     }

@@ -52,7 +52,7 @@ namespace Session_11
             Employee employee = grvEmployees.GetFocusedRow() as Employee;
             if (employee == null || employee.EmpType.Equals(EmployeeType.Manager) || employee.EmpType.Equals(EmployeeType.CEO)) return;
             petShopManager.Delete(employee);
-            petShopManager.Save();
+            //petShopManager.Save();
             grvEmployees.RefreshData();
         }
 
@@ -64,7 +64,7 @@ namespace Session_11
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            petShopManager.Save();
+            //petShopManager.Save();
             MessageBox.Show("Saved");
         }
     }
