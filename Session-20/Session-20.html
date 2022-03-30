@@ -120,6 +120,7 @@
             var surname = document.querySelector("#txtSurname").value;
             var age = document.querySelector("#txtAge").value;
             var gender = document.querySelector("#txtGender").value;
+            var customer = {id, name, surname, age, gender};
             customerArray.push(customer);
             redrawList();
         }
@@ -127,7 +128,7 @@
         function redrawList(){
             var customersTable = document.getElementById("tableCustomers");
             customersTable.innerHTML = "";
-            customers.forEach(c => {
+            customerArray.forEach(c => {
                 var li = document.createElement("li");
                 li.appendChild(document.createTextNode(c.name));
                 li.setAttribute('id', c.id);
