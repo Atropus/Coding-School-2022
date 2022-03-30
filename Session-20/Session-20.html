@@ -5,17 +5,20 @@
 <head>
 
     <style type="text/css">
-    .selected{
-        font-weight: bold;
-    }
+        .selected {
+            font-weight: bold;
+        }
+        #customerTable{
+            border-spacing: 30px 0px;
+        }
     </style>
 </head>
 
 <body>
+    <h1>1. + 2. Assignment</h1>
     <div class="main-container" style="display: flex; flex: 1 1 auto">
-        <h1>1. + 2. Assignment</h1>
-        <div style="width: 20%; min-width: 200px;">
-        </div>
+
+
 
         <div>
             <form id="frmMain">
@@ -37,132 +40,133 @@
                 </table>
             </form>
         </div>
-    <div class="main-container2" style="display: flex; flex: 1 1 auto" float="left">
-        <h1>3. Assignment</h1>
-        <div style="width: 20%; min-width: 200px;">
-            <ul id="lstList"></ul>
-        </div>
-
-        <div>
-             <form id="frmMain">
-                <input id="txtSelectedId" type="hidden">
-                <table>
-                    <tr>
-                        <td><label for="txtName">Name</label></td>
-                        <td><input id="txtName" type></td>
-                    </tr>
-                    <tr>
-                        <td><label for="txtSurname">Surname</label></td>
-                        <td><input id="txtSurname"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="txtAge">Age</label></td>
-                        <td><input id="txtAge"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="txtGender">Gender</label></td>
-                        <td><input id="txtGender"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <button id="btnInput" type="button" onclick="addTo()">Add</button>
-                            <br>
-                                <ul id="tableCustomers"></ul>
-                            <br>
-                            <h2>Customer Table</h2>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+    </div>
+    <h1>3. Assignment</h1>
+    <div class="main-container2" style="display: flex; flex: 1 1 auto">
+        <ul id="lstList"></ul>
     </div>
 
+    <div>
+        <form id="frmMain3">
+            <input id="txtSelectedId" type="hidden">
+            <table style="float: left;">
+                <tr>
+                    <td><label for="txtName">Name</label></td>
+                    <td><input id="txtName" type></td>
+                </tr>
+                <tr>
+                    <td><label for="txtSurname">Surname</label></td>
+                    <td><input id="txtSurname"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtAge">Age</label></td>
+                    <td><input id="txtAge"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtGender">Gender</label></td>
+                    <td><input id="txtGender"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button id="btnInput" type="button" onclick="addTo()">Add</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <h2 style="margin-left: 26%;">Customer Info</h2>
+        <table id="customerTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    
+
     <script type="text/javascript">
-        var counter = 0;
-        var customerArray = [];
+
+        function Reverse() {
 
 
-        function myClick(event){
-            console.log(event);
-            event.stopPropagation()
-        }
-
-        
-        function Reverse(){
-            
-            
             var inputS = document.querySelector("#txtInput").value;
             var result = "";
 
-            for (var i = inputS.length - 1; i>=0; i--){
+            for (var i = inputS.length - 1; i >= 0; i--) {
                 result += inputS[i];
-            
-            
-            if(inputS == result){
-                document.getElementById("txtResult").value = "Palindrome Input Heh"
-            }
-            else{
-                document.getElementById("txtResult").value = result;
-            }
+
+
+                if (inputS == result) {
+                    document.getElementById("txtResult").value = "Palindrome Input Heh"
+                }
+                else {
+                    document.getElementById("txtResult").value = result;
+                }
             }
         }
 
-        function submit(ev){
+        function submit(ev) {
             ev.preventDefault();
             Reverse();
         }
 
         document.getElementById("frmMain").addEventListener("submit", submit);
 
-        function addTo(){
-            var id = counter;
-            counter++;
+        function addTo() {
             var name = document.querySelector("#txtName").value;
             var surname = document.querySelector("#txtSurname").value;
             var age = document.querySelector("#txtAge").value;
             var gender = document.querySelector("#txtGender").value;
-            var customer = {id, name, surname, age, gender};
-            customerArray.push(customer);
-            redrawList();
+            var row = document.createElement("tr");
+            var CT = document.querySelector("#customerTable");
+            CT.appendChild(row);
+            var tdName = document.createElement("td");
+            var tdSurname = document.createElement("td");
+            var tdAge = document.createElement("td");
+            var tdGender = document.createElement("td");
+            tdName.innerHTML = name;
+            tdSurname.innerHTML = surname;
+            tdAge.innerHTML = age;
+            tdGender.innerHTML = gender;
+            row.appendChild(tdName);
+            row.appendChild(tdSurname);
+            row.appendChild(tdAge);
+            row.appendChild(tdGender);
+            row.addEventListener("click", onClick);
         }
 
-        function redrawList(){
-            var customersTable = document.getElementById("tableCustomers");
-            customersTable.innerHTML = "";
-            customerArray.forEach(c => {
-                var li = document.createElement("li");
-                li.appendChild(document.createTextNode(c.name));
-                li.setAttribute('id', c.id);
-                li.setAttribute('data-id', c.id);
-                li.addEventListener('click', (event) => {
-                    test(event);
-                })
-                customersTable.appendChild(li);
-                });
+        function onClick(){
+            var children = document.querySelector("#customerTable").children;
+            for( var i=1; i<children.length; i++){
+                children[i].style.fontWeight = "normal";
+            }
+
+            document.querySelector("#txtName").value = this.children[0].innerHTML;
+            document.querySelector("#txtSurname").value = this.children[1].innerHTML;
+            document.querySelector("#txtAge").value = this.children[2].innerHTML;
+            document.querySelector("#txtGender").value = this.children[3].innerHTML;
+            this.style.fontWeight = "bold";
         }
 
-        function test(e){
-    
-            let selectedId = +e.target.dataset.id;
-            let selectedItem = findItemById(selectedId);
-            let info = "Name: " + selectedItem.name + "<br>Surname: " + selectedItem.surname + "<br>Age: " + selectedItem.age + "<br>Gender: " + selectedItem.gender
-            document.getElementById("info").innerHTML = info;
-    
-        }
 
-        function findItemById(id){
+
+        function findItemById(id) {
             return customers.find(c => c.id === id);
         }
 
         //5. Assignment
 
         function incrementString(input) {
-        var splits = input.split(/(\d+)$/),
-        num = 1;
-        if (splits[1] !== undefined) num = parseInt(splits[1]) + 1;
-        return splits[0] + num;
+            var splits = input.split(/(\d+)$/),
+                num = 1;
+            if (splits[1] !== undefined) num = parseInt(splits[1]) + 1;
+            return splits[0] + num;
         }
 
     </script>
 </body>
-</html>
 
+</html>
