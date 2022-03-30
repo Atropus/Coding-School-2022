@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+</html>
+
+<head>
+
+    <style type="text/css">
+    .selected{
+        font-weight: bold;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main-container1" style="display: flex; flex: 1 1 auto">
+        <h1>1. + 2. Assignment</h1>
+        <div style="width: 20%; min-width: 200px;">
+            <ul id="lstList"></ul>
+        </div>
+
+        <div>
+            <form id="frmMain">
+                <input id="txtSelectedId" type="hidden">
+                <table>
+                    <tr>
+                        <td><label for="txtInput">Input</label></td>
+                        <td><input id="txtInput" type></td>
+                    </tr>
+                    <tr>
+                        <td><label for="txtResult">Result</label></td>
+                        <td><input id="txtResult"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button id="btnReverse" type="button" onclick="Reverse()">PressforReverse</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+<body>
+    <div class="main-container2" style="display: flex; flex: 1 1 auto" float="left">
+        <h2>3. Assignment</h2>
+        <div style="width: 20%; min-width: 200px;">
+            <ul id="lstList"></ul>
+        </div>
+    
+         <div>
+             <form id="frmMain">
+                <input id="txtSelectedId" type="hidden">
+                <table>
+                    <tr>
+                         <td><label for="txtName">Name</label></td>
+                        <td><input id="txtName" type></td>
+                    </tr>
+                     <tr>
+                        <td><label for="txtSurname">Surname</label></td>
+                         <td><input id="txtSurname"></td>
+                    </tr>
+                     <tr>
+                        <td><label for="txtAge">Age</label></td>
+                        <td><input id="txtAge"></td>
+                     </tr>
+                    <tr>
+                        <td><label for="txtGender">Gender</label></td>
+                        <td><input id="txtGender"></td>
+                    </tr>
+                     <tr>
+                        <td colspan="2">
+                                <button id="btnInput" type="button" onclick="Input()">Input</button>
+                         </td>
+                    </tr>
+                <tc>
+                     <table>
+                        <tc>
+                            <td><label for="txtName">Name</label></td>
+                        </tc>
+                    </table>
+                </tc>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+
+    <script type="text/javascript">
+
+        
+        function Reverse(){
+            
+            
+            var inputS = document.querySelector("#txtInput").value;
+            var result = "";
+
+            for (var i = inputS.length - 1; i>=0; i--){
+                result += inputS[i];
+            
+            
+            if(inputS == result){
+                document.getElementById("txtResult").value = "Palindrome Input Heh"
+            }
+            else{
+                document.getElementById("txtResult").value = result;
+            }
+            }
+        }
+
+        function submit(ev){
+            ev.preventDefault();
+            Reverse();
+        }
+
+        document.getElementById("frmMain").addEventListener("submit", submit);
+    </script>
+</body>
+</html>
+
