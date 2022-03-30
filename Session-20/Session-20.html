@@ -12,10 +12,9 @@
 </head>
 
 <body>
-    <div class="main-container1" style="display: flex; flex: 1 1 auto">
+    <div class="main-container" style="display: flex; flex: 1 1 auto">
         <h1>1. + 2. Assignment</h1>
         <div style="width: 20%; min-width: 200px;">
-            <ul id="lstList"></ul>
         </div>
 
         <div>
@@ -38,52 +37,54 @@
                 </table>
             </form>
         </div>
-<body>
     <div class="main-container2" style="display: flex; flex: 1 1 auto" float="left">
-        <h2>3. Assignment</h2>
+        <h1>3. Assignment</h1>
         <div style="width: 20%; min-width: 200px;">
             <ul id="lstList"></ul>
         </div>
-    
-         <div>
+
+        <div>
              <form id="frmMain">
                 <input id="txtSelectedId" type="hidden">
                 <table>
                     <tr>
-                         <td><label for="txtName">Name</label></td>
+                         td><label for="txtName">Name</label></td>
                         <td><input id="txtName" type></td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td><label for="txtSurname">Surname</label></td>
-                         <td><input id="txtSurname"></td>
+                        <td><input id="txtSurname"></td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td><label for="txtAge">Age</label></td>
                         <td><input id="txtAge"></td>
-                     </tr>
+                    </tr>
                     <tr>
                         <td><label for="txtGender">Gender</label></td>
                         <td><input id="txtGender"></td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td colspan="2">
-                                <button id="btnInput" type="button" onclick="Input()">Input</button>
-                         </td>
+                            <button id="btnInput" type="button" onclick="addTo()">Add</button>
+                            <br>
+                                <ul id="tableCustomers"></ul>
+                            <br>
+                            <h2>Customer Table</h2>
+                        </td>
                     </tr>
-                <tc>
-                     <table>
-                        <tc>
-                            <td><label for="txtName">Name</label></td>
-                        </tc>
-                    </table>
-                </tc>
                 </table>
             </form>
-        </div>
     </div>
-</body>
 
     <script type="text/javascript">
+        var counter = 0;
+        var customerArray = [];
+
+
+        function myClick(event){
+            console.log(event);
+            event.stopPropagation()
+        }
 
         
         function Reverse(){
@@ -111,6 +112,55 @@
         }
 
         document.getElementById("frmMain").addEventListener("submit", submit);
+
+        function addTo(){
+            var id = counter;
+            counter++;
+            var name = document.querySelector("#txtName").value;
+            var surname = document.querySelector("#txtSurname").value;
+            var age = document.querySelector("#txtAge").value;
+            var gender = document.querySelector("#txtGender").value;
+            customerArray.push(customer);
+            redrawList();
+        }
+
+        function redrawList(){
+            var customersTable = document.getElementById("tableCustomers");
+            customersTable.innerHTML = "";
+            customers.forEach(c => {
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode(c.name));
+                li.setAttribute('id', c.id);
+                li.setAttribute('data-id', c.id);
+                li.addEventListener('click', (event) => {
+                    test(event);
+                })
+                customersTable.appendChild(li);
+                });
+        }
+
+        function test(e){
+    
+            let selectedId = +e.target.dataset.id;
+            let selectedItem = findItemById(selectedId);
+            let info = "Name: " + selectedItem.name + "<br>Surname: " + selectedItem.surname + "<br>Age: " + selectedItem.age + "<br>Gender: " + selectedItem.gender
+            document.getElementById("info").innerHTML = info;
+    
+        }
+
+        function findItemById(id){
+            return customers.find(c => c.id === id);
+        }
+
+        //5. Assignment
+
+        function incrementString(input) {
+        var splits = input.split(/(\d+)$/),
+        num = 1;
+        if (splits[1] !== undefined) num = parseInt(splits[1]) + 1;
+        return splits[0] + num;
+        }
+
     </script>
 </body>
 </html>
