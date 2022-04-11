@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoilGasStation.EF", "GoilGa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoilGasStation.Model", "GoilGasStation.Model\GoilGasStation.Model.csproj", "{98B1E360-4CFA-41AE-BB32-D04A805296F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoilGasStation.Win", "GoilGasStation.Win\GoilGasStation.Win.csproj", "{45CEC370-127A-49C3-8209-CC25B360195C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoilGasStation.Win", "GoilGasStation.Win\GoilGasStation.Win.csproj", "{45CEC370-127A-49C3-8209-CC25B360195C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
