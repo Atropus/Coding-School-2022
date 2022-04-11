@@ -1,8 +1,8 @@
 namespace GoilGasStation.Win
 {
-    public partial class Form1 : Form
+    public partial class GoilGasStationForm : Form
     {
-        public Form1()
+        public GoilGasStationForm()
         {
             InitializeComponent();
         }
