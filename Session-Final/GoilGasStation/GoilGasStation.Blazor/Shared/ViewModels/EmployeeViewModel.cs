@@ -15,10 +15,10 @@ namespace GoilGasStation.Blazor.Shared.ViewModels
         public string Surname { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime HireDateStart { get; set; }
+        public DateTime? HireDateStart { get; set; } = DateTime.Now; 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime HireDateEnd { get; set; }
+        public DateTime? HireDateEnd { get; set; }
         public decimal SalaryPerMonth { get; set; }
         //[EnumDataType(typeof(EmployeeType))]
         public EmployeeType EmployeeType { get; set; }
@@ -34,7 +34,7 @@ namespace GoilGasStation.Blazor.Shared.ViewModels
         public DateTime HireDateStart { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime HireDateEnd { get; set; }
+        public DateTime? HireDateEnd { get; set; }
         public decimal SalaryPerMonth { get; set; }
         //[EnumDataType(typeof(EmployeeType))]
         public EmployeeType EmployeeType { get; set; }

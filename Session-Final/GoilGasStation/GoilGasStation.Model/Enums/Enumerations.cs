@@ -2,9 +2,9 @@
 {
     public enum ItemType
     {
-        Fuel,
-        Product,
-        Service
+        Fuel = 1,
+        Product = 2, 
+        Service = 3,
 
     }
     public enum EmployeeType

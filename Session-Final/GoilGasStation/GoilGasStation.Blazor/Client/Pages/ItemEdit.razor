@@ -1,0 +1,85 @@
+﻿@page "/ItemList/edit/{Id:guid?}"
+@using global::GoilGasStation.Blazor.Shared.ViewModels
+@using GoilGasStation.Model.Entities
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+<h3>Item</h3>
+
+@if (ItemItem == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Code</label>
+            <input class="form-control" @bind="@ItemItem.Code" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Description</label>
+            <input class="form-control" @bind="@ItemItem.Description" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Item Type</label>
+            <EditForm class="mb-4" Model="@ItemItem">
+                <InputSelect @bind-Value="ItemItem.ItemType"> 
+                    <option value="0">Select an Item Type..</option>
+                    @foreach (var type in Enum.GetValues(typeof(ItemType)))
+                    {
+                        <option value="@type">@type</option>
+                    }
+                </InputSelect>
+            </EditForm>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Price</label>
+            <input class="form-control" @bind="@ItemItem.Price" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Cost</label>
+            <input class="form-control" @bind="@ItemItem.Cost" />
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col">
+            <button class="btn btn-success" @onclick="OnSave">Save</button>
+            <button class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid? ID { get; set; }
+    //private ItemViewModel itemView = new();
+    ItemEditViewModel ItemItem { get; set; } = new();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+            ItemItem = await httpClient.GetFromJsonAsync<ItemEditViewModel>($"item/{(ID == null ? Guid.Empty : ID)}");
+    }
+
+    protected async Task OnSave()
+    {
+        HttpResponseMessage response;
+        if (ID == null)
+        {
+            response = await httpClient.PostAsJsonAsync("item", ItemItem);
+        }
+        else
+        {
+            response = await httpClient.PutAsJsonAsync("item", ItemItem);
+        }
+        response.EnsureSuccessStatusCode();
+        navigationManager.NavigateTo("ItemList");
+    }
+
+    protected void OnCancel()
+    {
+        navigationManager.NavigateTo("ItemList");
+    }
+}

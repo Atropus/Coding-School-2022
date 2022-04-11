@@ -1,5 +1,46 @@
-﻿<h3>EmployeeList</h3>
+﻿@page "/EmployeeList"
+@inject HttpClient httpClient
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
 
-@code {
+<h3>Employee List</h3>
 
+<tr>
+    <button class="btn btn-primary" @onclick="AddEmployee">Add New Employee</button>
+</tr>
+@if (isLoading)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Employee Type</th>
+                <th>Salary Per Month</th>
+                <th>Hire Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var employee in employeeList)
+            {
+                <tr>
+                    <td>@employee.Name</td>
+                    <td>@employee.Surname</td>
+                    <td>@employee.EmployeeType</td>
+                    <td>@employee.SalaryPerMonth</td>
+                    <td>@employee.HireDateStart</td>
+                    <td>@employee.HireDateEnd</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditEmployee(employee)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteEmployee(employee)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

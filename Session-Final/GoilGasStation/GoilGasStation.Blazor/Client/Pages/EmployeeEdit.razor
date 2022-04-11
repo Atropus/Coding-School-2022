@@ -1,0 +1,88 @@
+﻿@page "/EmployeeList/edit/{Id:guid?}"
+@using global::GoilGasStation.Blazor.Shared.ViewModels
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+<h3>Employee</h3>
+
+@if (EmployeeItem == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Name</label>
+            <input class="form-control" @bind="@EmployeeItem.Name" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Surname</label>
+            <input class="form-control" @bind="@EmployeeItem.Surname" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Employee Type</label>
+            <EditForm class="mb-4" Model="@EmployeeItem">
+                <InputSelect @bind-Value="EmployeeItem.EmployeeType"> 
+                    <option value="0">Select an Employee Type..</option>
+                    @foreach (var type in Enum.GetValues(typeof(EmployeeType)))
+                    {
+                        <option value="@type">@type</option>
+                    }
+                </InputSelect>
+            </EditForm>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Salary Per Month</label>
+            <input class="form-control" @bind="@EmployeeItem.SalaryPerMonth" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Hire Date</label>
+            <input class="form-control" @bind="@EmployeeItem.HireDateStart" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">End Date</label>
+            <input class="form-control" @bind="@EmployeeItem.HireDateEnd" />
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col">
+            <button class="btn btn-success" @onclick="OnSave">Save</button>
+            <button class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid? ID { get; set; }
+    EmployeeEditViewModel EmployeeItem { get; set; } = new();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        EmployeeItem = await httpClient.GetFromJsonAsync<EmployeeEditViewModel>($"employee/{(ID == null ? Guid.Empty : ID)}");
+    }
+
+    protected async Task OnSave()
+    {
+        HttpResponseMessage response;
+        if (ID == null)
+        {
+            response = await httpClient.PostAsJsonAsync("employee", EmployeeItem);
+        }
+        else
+        {
+            response = await httpClient.PutAsJsonAsync("employee", EmployeeItem);
+        }
+        response.EnsureSuccessStatusCode();
+        navigationManager.NavigateTo("employeelist");
+    }
+
+    protected void OnCancel()
+    {
+        navigationManager.NavigateTo("employeelist");
+    }
+}
+

@@ -1,5 +1,49 @@
-﻿<h3>ItemList</h3>
+﻿@page "/ItemList"
+@inject HttpClient httpClient
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
+
+<h3>Item List</h3>
+
+<tr>
+    <button class="btn btn-primary" @onclick="AddItem">Add New Item</button>
+</tr>
+@if (isLoading)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Description</th>
+                <th>ItemType</th>
+                <th>Price</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in itemList)
+            {
+                <tr>
+                    <td>@item.Code</td>
+                    <td>@item.Description</td>
+                    <td>@item.ItemType</td>
+                    <td>@item.Price</td>
+                    <td>@item.Cost</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditItem(item)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteItem(item)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
+
 
 }
