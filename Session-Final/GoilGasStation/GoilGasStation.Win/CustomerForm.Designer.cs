@@ -28,22 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CustomerGridView = new System.Windows.Forms.DataGridView();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.grdCustomerList = new System.Windows.Forms.DataGridView();
             this.btnNewCustomer = new System.Windows.Forms.Button();
             this.btnEditCustomer = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnDeleteCustomer = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.CustomerGridView)).BeginInit();
+            this.bsCustomerListSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.grdCustomerList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsCustomerListSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // CustomerGridView
+            // grdCustomerList
             // 
-            this.CustomerGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CustomerGridView.Location = new System.Drawing.Point(12, 12);
-            this.CustomerGridView.Name = "CustomerGridView";
-            this.CustomerGridView.RowTemplate.Height = 25;
-            this.CustomerGridView.Size = new System.Drawing.Size(776, 399);
-            this.CustomerGridView.TabIndex = 0;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdCustomerList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.grdCustomerList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdCustomerList.DefaultCellStyle = dataGridViewCellStyle2;
+            this.grdCustomerList.Location = new System.Drawing.Point(12, 12);
+            this.grdCustomerList.Name = "grdCustomerList";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdCustomerList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.grdCustomerList.RowTemplate.Height = 25;
+            this.grdCustomerList.Size = new System.Drawing.Size(776, 399);
+            this.grdCustomerList.TabIndex = 0;
             // 
             // btnNewCustomer
             // 
@@ -63,6 +93,7 @@
             this.btnEditCustomer.TabIndex = 2;
             this.btnEditCustomer.Text = "Edit";
             this.btnEditCustomer.UseVisualStyleBackColor = true;
+            this.btnEditCustomer.Click += new System.EventHandler(this.btnEditCustomer_Click);
             // 
             // btnClose
             // 
@@ -81,6 +112,7 @@
             this.btnDeleteCustomer.TabIndex = 4;
             this.btnDeleteCustomer.Text = "Delete";
             this.btnDeleteCustomer.UseVisualStyleBackColor = true;
+            this.btnDeleteCustomer.Click += new System.EventHandler(this.btnDeleteCustomer_Click);
             // 
             // CustomerForm
             // 
@@ -91,20 +123,23 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnEditCustomer);
             this.Controls.Add(this.btnNewCustomer);
-            this.Controls.Add(this.CustomerGridView);
+            this.Controls.Add(this.grdCustomerList);
             this.Name = "CustomerForm";
             this.Text = "Customer List";
-            ((System.ComponentModel.ISupportInitialize)(this.CustomerGridView)).EndInit();
+            this.Load += new System.EventHandler(this.CustomerForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.grdCustomerList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsCustomerListSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private DataGridView CustomerGridView;
+        private DataGridView grdCustomerList;
         private Button btnNewCustomer;
         private Button btnEditCustomer;
         private Button btnClose;
         private Button btnDeleteCustomer;
+        private BindingSource bsCustomerListSource;
     }
 }

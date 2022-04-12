@@ -59,12 +59,14 @@
             this.fuelInventoryToolStripMenuItem.Name = "fuelInventoryToolStripMenuItem";
             this.fuelInventoryToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
             this.fuelInventoryToolStripMenuItem.Text = "Fuel + Inventory";
+            this.fuelInventoryToolStripMenuItem.Click += new System.EventHandler(this.fuelInventoryToolStripMenuItem_Click);
             // 
             // transactionToolStripMenuItem
             // 
             this.transactionToolStripMenuItem.Name = "transactionToolStripMenuItem";
             this.transactionToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.transactionToolStripMenuItem.Text = "Transaction";
+            this.transactionToolStripMenuItem.Click += new System.EventHandler(this.transactionToolStripMenuItem_Click);
             // 
             // GoilGasStationForm
             // 

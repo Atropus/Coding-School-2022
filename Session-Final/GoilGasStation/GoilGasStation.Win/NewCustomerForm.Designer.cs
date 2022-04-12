@@ -44,7 +44,7 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(12, 9);
+            this.lblName.Location = new System.Drawing.Point(52, 9);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(39, 15);
             this.lblName.TabIndex = 0;
@@ -53,7 +53,7 @@
             // lblSurname
             // 
             this.lblSurname.AutoSize = true;
-            this.lblSurname.Location = new System.Drawing.Point(12, 37);
+            this.lblSurname.Location = new System.Drawing.Point(39, 41);
             this.lblSurname.Name = "lblSurname";
             this.lblSurname.Size = new System.Drawing.Size(54, 15);
             this.lblSurname.TabIndex = 1;
@@ -62,7 +62,7 @@
             // lblCardNumber
             // 
             this.lblCardNumber.AutoSize = true;
-            this.lblCardNumber.Location = new System.Drawing.Point(12, 69);
+            this.lblCardNumber.Location = new System.Drawing.Point(14, 72);
             this.lblCardNumber.Name = "lblCardNumber";
             this.lblCardNumber.Size = new System.Drawing.Size(79, 15);
             this.lblCardNumber.TabIndex = 2;
@@ -72,26 +72,26 @@
             // 
             this.txtName.Location = new System.Drawing.Point(99, 6);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(100, 23);
+            this.txtName.Size = new System.Drawing.Size(164, 23);
             this.txtName.TabIndex = 3;
             // 
             // txtSurname
             // 
-            this.txtSurname.Location = new System.Drawing.Point(99, 35);
+            this.txtSurname.Location = new System.Drawing.Point(99, 38);
             this.txtSurname.Name = "txtSurname";
-            this.txtSurname.Size = new System.Drawing.Size(100, 23);
+            this.txtSurname.Size = new System.Drawing.Size(164, 23);
             this.txtSurname.TabIndex = 4;
             // 
             // txtCardNumber
             // 
-            this.txtCardNumber.Location = new System.Drawing.Point(99, 64);
+            this.txtCardNumber.Location = new System.Drawing.Point(99, 69);
             this.txtCardNumber.Name = "txtCardNumber";
-            this.txtCardNumber.Size = new System.Drawing.Size(100, 23);
+            this.txtCardNumber.Size = new System.Drawing.Size(164, 23);
             this.txtCardNumber.TabIndex = 5;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(16, 104);
+            this.btnSave.Location = new System.Drawing.Point(28, 122);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 6;
@@ -101,18 +101,19 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(111, 104);
+            this.btnCancel.Location = new System.Drawing.Point(155, 122);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // NewCustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(275, 157);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtCardNumber);
