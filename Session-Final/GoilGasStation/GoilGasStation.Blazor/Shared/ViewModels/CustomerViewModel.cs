@@ -8,7 +8,7 @@ namespace GoilGasStation.Blazor.Shared.ViewModels
 {
     public class CustomerViewModel
     {
-        public Guid ID { get; set; } = Guid.NewGuid();
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string CardNumber { get; set; }

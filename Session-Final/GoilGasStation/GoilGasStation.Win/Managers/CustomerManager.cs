@@ -11,9 +11,13 @@ namespace GoilGasStation.Win.Managers
     public class CustomerManager
     {
         HttpClient httpClient = new HttpClient();
+        public CustomerManager()
+        {
+
+        }
         public async Task<List<CustomerViewModel>> GetCustomers()
         {
-            return await httpClient.GetFromJsonAsync<List<CustomerViewModel>>("https://localhost:7069/Customer");
+            return await httpClient.GetFromJsonAsync<List<CustomerViewModel>>("https://localhost:7069/CustomerList");
         }
         public async Task CreateCustomer(CustomerViewModel customer)
         {

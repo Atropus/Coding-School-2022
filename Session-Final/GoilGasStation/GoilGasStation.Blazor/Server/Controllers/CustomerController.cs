@@ -31,6 +31,7 @@ namespace RedMotors.Blazor.Server.Controllers
         [HttpGet("{id}")]
         public async Task<CustomerEditViewModel> Get(Guid id)
         {
+            //TODO
             CustomerEditViewModel model = new();
             if (id != Guid.Empty)
             {
@@ -40,11 +41,41 @@ namespace RedMotors.Blazor.Server.Controllers
                 model.Surname = existingCustomer.Surname;
                 model.CardNumber = existingCustomer.CardNumber;
             }
+            else
+            {
+                var customerlist = await _customerRepo.GetAllAsync();
+                if(customerlist.Count() != 0)
+                {
+                    var existingCustomer = customerlist.First();
+                    model.CardNumber = "A" + (Convert.ToInt32(existingCustomer.CardNumber.Substring(1, existingCustomer.CardNumber.Count() - 1)) + 1).ToString();
+                }
+                else
+                {
+                    model.CardNumber = "A10001";
+                }
+
+            }
             return model;
         }
+        //[HttpGet("CardNumber")]
+        //public async Task<CustomerEditViewModel> GetCardNumber()
+        //{
+        //    CustomerEditViewModel model = new();
+
+        //    var customerlist = await _customerRepo.GetAllAsync();
+        //    var existingCustomer = customerlist.Last();
+        //    model.ID = existingCustomer.ID;
+        //    model.Name = existingCustomer.Name;
+        //    model.Surname = existingCustomer.Surname;
+        //    model.CardNumber = "A"+(Convert.ToInt32(existingCustomer.CardNumber.Substring(1,existingCustomer.CardNumber.Count()-1))+1).ToString();
+
+        //    return model;
+        //}
+
         [HttpPost]
         public async Task Post(CustomerEditViewModel customer)
         {
+
             var newCustomer = new Customer
             {
                 Name = customer.Name,

@@ -14,15 +14,15 @@ else
     <div class="row">
         <div class="col-md-6">
             <label class="form-label">Name</label>
-            <input class="form-control" @bind="@CustomerItem.Name" />
+            <input placeholder="Name..." class="form-control" @bind="@CustomerItem.Name" />
         </div>
         <div class="col-md-6">
             <label class="form-label">Surname</label>
-            <input class="form-control" @bind="@CustomerItem.Surname" />
+            <input placeholder="Surname..." class="form-control" @bind="@CustomerItem.Surname" />
         </div>
         <div class="col-md-6">
-            <label class="form-label">Salary Per Month</label>
-            <input class="form-control" @bind="@CustomerItem.CardNumber" />
+            <label class="form-label">Card Number</label>
+            <input placeholder="e.x. A10001, A10002..." class="form-control" @bind="@CustomerItem.CardNumber" readonly/>
         </div>
     </div>
 
@@ -37,12 +37,13 @@ else
 @code {
     [Parameter] public Guid? ID { get; set; }
     CustomerEditViewModel CustomerItem { get; set; } = new();
+    Validations Validations { get; set; } = new();
 
 
 
     protected override async Task OnInitializedAsync()
     {
-            CustomerItem = await httpClient.GetFromJsonAsync<CustomerEditViewModel>($"customer/{(ID == null ? Guid.Empty : ID)}");
+        CustomerItem = await httpClient.GetFromJsonAsync<CustomerEditViewModel>($"customer/{(ID == null ? Guid.Empty : ID)}");
     }
 
     protected async Task OnSave()
@@ -50,7 +51,10 @@ else
         HttpResponseMessage response;
         if (ID == null)
         {
-            response = await httpClient.PostAsJsonAsync("customer", CustomerItem);
+            if (Validations.Validate(CustomerItem) == true) {
+                response = await httpClient.PostAsJsonAsync("customer", CustomerItem);
+            }
+            else return;
         }
         else
         {
