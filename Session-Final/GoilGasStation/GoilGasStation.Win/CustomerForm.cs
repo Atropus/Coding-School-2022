@@ -33,7 +33,7 @@ namespace GoilGasStation.Win
         private async void CustomerForm_Load(object sender, EventArgs e)
         {
             grdCustomerList.ReadOnly = true;
-            RefreshData();
+            await RefreshData();
             
         }
         private async Task RefreshData()
@@ -67,6 +67,11 @@ namespace GoilGasStation.Win
             _customerManager.DeleteCustomer(customer);
 
             await RefreshData();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

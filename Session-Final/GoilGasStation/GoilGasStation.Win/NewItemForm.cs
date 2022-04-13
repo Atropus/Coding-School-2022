@@ -54,8 +54,9 @@ namespace GoilGasStation.Win
             txtCode.DataBindings.Add(new Binding("Text", bsItemSource, "Code", true));
             txtDescription.DataBindings.Add(new Binding("Text", bsItemSource, "Description", true));
             cmbItemType.DataSource = Enum.GetValues(typeof(ItemType));
-            cmbItemType.SelectedIndex = 0;
-            cmbItemType.Text = "Please choose a type...";
+            cmbItemType.DataBindings.Add(new Binding("Text", bsItemSource, "ItemType", true));
+            //cmbItemType.SelectedIndex = -1;
+            //cmbItemType.Text = "Please choose a type...";
             txtPrice.DataBindings.Add(new Binding("Text", bsItemSource, "Price", true));
             txtCost.DataBindings.Add(new Binding("Text", bsItemSource, "Cost", true));
 

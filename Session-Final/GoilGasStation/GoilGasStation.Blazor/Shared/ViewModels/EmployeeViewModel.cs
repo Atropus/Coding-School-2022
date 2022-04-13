@@ -13,11 +13,11 @@ namespace GoilGasStation.Blazor.Shared.ViewModels
         public Guid ID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? HireDateStart { get; set; } = DateTime.Now; 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? HireDateEnd { get; set; }
         public decimal SalaryPerMonth { get; set; }
         //[EnumDataType(typeof(EmployeeType))]
@@ -29,11 +29,11 @@ namespace GoilGasStation.Blazor.Shared.ViewModels
         public Guid ID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime HireDateStart { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime HireDateStart { get; set; } = DateTime.Now;
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? HireDateEnd { get; set; }
         public decimal SalaryPerMonth { get; set; }
         //[EnumDataType(typeof(EmployeeType))]
