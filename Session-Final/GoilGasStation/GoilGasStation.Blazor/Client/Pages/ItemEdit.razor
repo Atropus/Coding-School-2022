@@ -25,7 +25,7 @@ else
             <label class="form-label">Item Type</label>
             <EditForm class="mb-4" Model="@ItemItem">
                 <InputSelect @bind-Value="ItemItem.ItemType"> 
-                    <option value="0">Select an Item Type..</option>
+                    <option value="-1">Select an Item Type..</option>
                     @foreach (var type in Enum.GetValues(typeof(ItemType)))
                     {
                         <option value="@type">@type</option>

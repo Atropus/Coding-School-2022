@@ -48,7 +48,7 @@ namespace GoilGasStation.EF.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("GoilGasStation.Model.Employee", b =>
@@ -84,7 +84,7 @@ namespace GoilGasStation.EF.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("GoilGasStation.Model.Item", b =>
@@ -117,7 +117,7 @@ namespace GoilGasStation.EF.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("GoilGasStation.Model.Transaction", b =>
@@ -150,7 +150,7 @@ namespace GoilGasStation.EF.Migrations
 
                     b.HasIndex("EmployeeID");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("GoilGasStation.Model.TransactionLine", b =>
@@ -192,7 +192,7 @@ namespace GoilGasStation.EF.Migrations
 
                     b.HasIndex("TransactionID");
 
-                    b.ToTable("TransactionLines");
+                    b.ToTable("TransactionLines", (string)null);
                 });
 
             modelBuilder.Entity("GoilGasStation.Model.Transaction", b =>
