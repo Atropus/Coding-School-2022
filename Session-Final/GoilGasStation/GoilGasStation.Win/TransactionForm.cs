@@ -26,55 +26,78 @@ namespace GoilGasStation.Win
         private EmployeeViewModel _employeeViewModel;
         private EmployeeManager _employeeManager = new();
 
-
         public TransactionForm()
         {
             InitializeComponent();
             this.CenterToParent();
         }
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void TransactionForm_Load(object sender, EventArgs e)
         {
+            if (_itemViewModel == null && _transactionViewModel == null)
+            {
+                _itemViewModel = new ItemViewModel();
+                _transactionViewModel = new TransactionViewModel();
+                _transactionViewModel.TransactionLines = new();
+            }
             txtDate.Text = Convert.ToString(DateTime.UtcNow);
+            cmbItemType.Enabled = false;
+            txtCode.Enabled = false;
+            cmbDescription.Enabled = false;
+            spinQuantity.Enabled = false;
+            bsItemSource.DataSource = _itemViewModel;
             bsTransactionSource.DataSource = _transactionViewModel;
             spinQuantity.Minimum = 0;
             SetDataBinding();
+
         }
 
-        private void SetDataBinding()
+
+        private async void SetDataBinding()
         {
-            /TODO
+            await _itemManager.GetItems();
             cmbItemType.DataSource = Enum.GetValues(typeof(ItemType));
-            cmbItemType.DataBindings.Add(new Binding("Text", bsTransactionSource, "ItemType", true));
-            cmbItemType.SelectedIndex = -1;
-            cmbItemType.Text = "Select a Category";
-            //txtCode.DataBindings.Add(new Binding("Text", bsTransactionSource, "Code", true))
-            //txtCardNumber.DataBindings.Add(new Binding("Text", bsTransactionSource, "CardNumber", true));
+            cmbItemType.DataBindings.Add(new Binding("Text", bsItemSource, "ItemType", true));
+            txtCode.DataBindings.Add(new Binding("Text", bsItemSource, "Code", true));
+            cmbDescription.DataBindings.Add(new Binding("Text", bsItemSource, "Description", true));
+            txtPrice.DataBindings.Add(new Binding("Text", bsItemSource, "Price", true));
+            cmbPaymentMethod.DataSource = Enum.GetValues(typeof(PaymentMethod));
+            cmbPaymentMethod.DataBindings.Add(new Binding("Text", bsTransactionSource, "PaymentMethod", true));
 
-            ////txtDate.DataBindings.Add(new Binding("Date", bsTransactionSource, ))
         }
-        private async void RefreshTransData()
+        private void RefreshTransData()
         {
-            
+            txtNetValue.Text = "0";
+            txtDiscountValue.Text = "0";
+            txtTotalValue.Text = "0";
+            for (int i = 0; i < grdTransactionLines.Rows.Count; i++)
+            {
+                txtNetValue.Text = Convert.ToString(double.Parse(txtNetValue.Text) + double.Parse(grdTransactionLines.Rows[i].Cells[5].Value.ToString()));
+                txtDiscountValue.Text = Convert.ToString(double.Parse(txtDiscountValue.Text) + double.Parse(grdTransactionLines.Rows[i].Cells[7].Value.ToString()));
+                txtTotalValue.Text = Convert.ToString(double.Parse(txtTotalValue.Text) + double.Parse(grdTransactionLines.Rows[i].Cells[8].Value.ToString()));
+            }
+
+
+
         }
 
         private async Task RefreshTransLineData()
         {
             grdTransactionLines.DataSource = null;
-            grdTransactionLines.DataSource = await _transactionLineManager.GetTransactionLines();
+            grdTransactionLines.DataSource = _transactionViewModel.TransactionLines;
             grdTransactionLines.Update();
             grdTransactionLines.Refresh();
             grdTransactionLines.Columns["ID"].Visible = false;
             grdTransactionLines.Columns["TransactionID"].Visible = false;
             grdTransactionLines.Columns["ItemID"].Visible = false;
+            //grdTransactionLines.Columns["DiscountPercent"].Visible = false;
+            //grdTransactionLines.Columns["DiscountValue"].Visible = false;
+            //grdTransactionLines.Columns["TotalValue"].Visible = false;
+            
 
 
         }
+
 
         public bool CheckCardNumber(string cardNumber)
         {
@@ -97,13 +120,21 @@ namespace GoilGasStation.Win
                     txtCustomerName.Text = customer.Name;
                     txtCustomerSurname.Text = customer.Surname;
                     txtCustomerID.Text = Convert.ToString(customer.ID);
+                    cmbItemType.Enabled = true;
+                    txtCode.Enabled = true;
+                    cmbDescription.Enabled = true;
+                    spinQuantity.Enabled = true;
+                    //cmbItemType.SelectedIndex = -1;
+                    //cmbItemType.Text = "Choose a Category";
+
                 }
-                MessageBox.Show(this, "Wrong Card Number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
 
 
             }
+            //MessageBox.Show(this, "Wrong Card Number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-            
+
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -117,21 +148,85 @@ namespace GoilGasStation.Win
             cmbDescription.Text = String.Empty;
             spinQuantity.Value = 1;
             txtPrice.Text = String.Empty;
-            var itemlist = await _itemManager.GetItems();
-            if (itemlist is not null)
-            {
-                //txtCode.Text = itemlist.Code;
-            }
-                var customerlist = await _customerManager.GetCustomers();
-                var customer = customerlist.SingleOrDefault(c => c.CardNumber == txtCardNumber.Text);
-                if (customer is not null)
-                {
-                    txtCustomerName.Text = customer.Name;
-                    txtCustomerSurname.Text = customer.Surname;
-                    txtCustomerID.Text = Convert.ToString(customer.ID);
-                }
-                MessageBox.Show(this, "Wrong Card Number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
+
+            var itemlist = await _itemManager.GetItems();
+            var item = itemlist.Where(i => (int)i.ItemType == cmbItemType.SelectedIndex).ToList();
+            //var item = itemlist.SingleOrDefault(i => i.Description == cmbDescription.Text);
+            if (cmbItemType.SelectedIndex >= 0 && item is not null && itemlist is not null)
+            {
+                _itemViewModel.ID = item.FirstOrDefault(i => i.ID != Guid.Empty).ID;
+                _itemViewModel.Code = item.FirstOrDefault(i => i.ID != Guid.Empty).Code;
+                _itemViewModel.Description = item.FirstOrDefault(i => i.ID != Guid.Empty).Description;
+                _itemViewModel.Price = item.FirstOrDefault(i => i.ID != Guid.Empty).Price;
+                //txtCode.Text = Convert.ToString(item.Code);
+                //cmbDescription.Text = item.Description;
+                //txtPrice.Text = Convert.ToString(item.Price);
+            }
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            decimal netValueTotal = 0.00M;
+            var newTransLine = new TransactionLineViewModel();
+            newTransLine.ItemPrice = _itemViewModel.Price;
+            newTransLine.Quantity = spinQuantity.Value;
+            newTransLine.ItemID = _itemViewModel.ID;
+            newTransLine.NetValue = newTransLine.ItemPrice * newTransLine.Quantity;
+            RefreshTransLineData();
+            for (int i = 0; i < grdTransactionLines.Rows.Count; i++)
+            {
+                netValueTotal += Convert.ToDecimal(grdTransactionLines.Rows[i].Cells[5].Value);
+
+            }
+            
+            if (netValueTotal > 19.99M)
+            {
+                txtDiscountPercent.Text = "10%";
+                for (int i = 0; i < grdTransactionLines.Rows.Count; i++)
+                {
+                    var ii = _transactionViewModel.TransactionLines.FindIndex(c => c.DiscountPercent == 0);
+                    if(ii >= 0) { 
+                    _transactionViewModel.TransactionLines[ii].DiscountPercent = 0.10M;
+                    _transactionViewModel.TransactionLines[ii].DiscountValue= newTransLine.NetValue * _transactionViewModel.TransactionLines[ii].DiscountPercent;
+                    _transactionViewModel.TransactionLines[ii].TotalValue = newTransLine.NetValue - _transactionViewModel.TransactionLines[ii].DiscountValue;
+                    }
+                }
+
+                    newTransLine.DiscountPercent = 0.10M;
+
+                newTransLine.DiscountValue = newTransLine.NetValue * newTransLine.DiscountPercent;
+                newTransLine.TotalValue = newTransLine.NetValue - newTransLine.DiscountValue;
+
+            }
+            else
+            {
+                newTransLine.DiscountPercent = 0.00M;
+                newTransLine.DiscountValue = newTransLine.NetValue * newTransLine.DiscountPercent;
+                newTransLine.TotalValue = newTransLine.NetValue - newTransLine.DiscountValue;
+            }
+            _transactionViewModel.TransactionLines.Add(newTransLine);
+            RefreshTransLineData();
+            RefreshTransData();
+
+        }
+
+        private async void cmbItemType_SelectedValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (grdTransactionLines.SelectedRows.Count != 1)
+                return;
+
+            var customer = (TransactionLineViewModel)grdTransactionLines.SelectedRows[index: 0].DataBoundItem;
+            
+
+            RefreshTransLineData();
+            RefreshTransData(); ;
         }
     }
 }

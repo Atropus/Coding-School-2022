@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblCardNumber = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.lblUser = new System.Windows.Forms.Label();
@@ -48,8 +48,8 @@
             this.bsTransactionSource = new System.Windows.Forms.BindingSource(this.components);
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.txtNetValue = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtDiscountPercent = new System.Windows.Forms.TextBox();
+            this.txtDiscountValue = new System.Windows.Forms.TextBox();
             this.txtTotalValue = new System.Windows.Forms.TextBox();
             this.spinQuantity = new System.Windows.Forms.NumericUpDown();
             this.cmbItemType = new System.Windows.Forms.ComboBox();
@@ -69,9 +69,12 @@
             this.txtCode = new System.Windows.Forms.TextBox();
             this.txtCustomerID = new System.Windows.Forms.TextBox();
             this.txtEmployeeID = new System.Windows.Forms.TextBox();
+            this.bsItemSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdTransactionLines)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransactionSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinQuantity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsItemSource)).BeginInit();
             this.SuspendLayout();
             // 
             // lblCardNumber
@@ -103,33 +106,34 @@
             // 
             // grdTransactionLines
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdTransactionLines.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdTransactionLines.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.grdTransactionLines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grdTransactionLines.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdTransactionLines.DefaultCellStyle = dataGridViewCellStyle2;
             this.grdTransactionLines.Location = new System.Drawing.Point(12, 145);
             this.grdTransactionLines.Name = "grdTransactionLines";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdTransactionLines.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.grdTransactionLines.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdTransactionLines.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.grdTransactionLines.RowTemplate.Height = 25;
             this.grdTransactionLines.Size = new System.Drawing.Size(776, 222);
             this.grdTransactionLines.TabIndex = 4;
@@ -139,7 +143,7 @@
             this.txtCardNumber.Location = new System.Drawing.Point(119, 41);
             this.txtCardNumber.Name = "txtCardNumber";
             this.txtCardNumber.Size = new System.Drawing.Size(228, 23);
-            this.txtCardNumber.TabIndex = 5;
+            this.txtCardNumber.TabIndex = 0;
             this.txtCardNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCardNumber_KeyPress);
             // 
             // btnClose
@@ -147,7 +151,7 @@
             this.btnClose.Location = new System.Drawing.Point(713, 416);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 6;
+            this.btnClose.TabIndex = 21;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -192,7 +196,6 @@
             this.txtUserSurname.ReadOnly = true;
             this.txtUserSurname.Size = new System.Drawing.Size(176, 23);
             this.txtUserSurname.TabIndex = 11;
-            this.txtUserSurname.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // txtDate
             // 
@@ -227,21 +230,21 @@
             this.txtNetValue.Size = new System.Drawing.Size(102, 23);
             this.txtNetValue.TabIndex = 16;
             // 
-            // textBox4
+            // txtDiscountPercent
             // 
-            this.textBox4.Location = new System.Drawing.Point(470, 386);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(102, 23);
-            this.textBox4.TabIndex = 17;
+            this.txtDiscountPercent.Location = new System.Drawing.Point(470, 386);
+            this.txtDiscountPercent.Name = "txtDiscountPercent";
+            this.txtDiscountPercent.ReadOnly = true;
+            this.txtDiscountPercent.Size = new System.Drawing.Size(102, 23);
+            this.txtDiscountPercent.TabIndex = 17;
             // 
-            // textBox5
+            // txtDiscountValue
             // 
-            this.textBox5.Location = new System.Drawing.Point(578, 386);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(102, 23);
-            this.textBox5.TabIndex = 18;
+            this.txtDiscountValue.Location = new System.Drawing.Point(578, 386);
+            this.txtDiscountValue.Name = "txtDiscountValue";
+            this.txtDiscountValue.ReadOnly = true;
+            this.txtDiscountValue.Size = new System.Drawing.Size(102, 23);
+            this.txtDiscountValue.TabIndex = 18;
             // 
             // txtTotalValue
             // 
@@ -256,7 +259,7 @@
             this.spinQuantity.Location = new System.Drawing.Point(470, 114);
             this.spinQuantity.Name = "spinQuantity";
             this.spinQuantity.Size = new System.Drawing.Size(120, 23);
-            this.spinQuantity.TabIndex = 20;
+            this.spinQuantity.TabIndex = 4;
             // 
             // cmbItemType
             // 
@@ -264,8 +267,8 @@
             this.cmbItemType.Location = new System.Drawing.Point(108, 114);
             this.cmbItemType.Name = "cmbItemType";
             this.cmbItemType.Size = new System.Drawing.Size(121, 23);
-            this.cmbItemType.TabIndex = 21;
-            this.cmbItemType.SelectedIndexChanged += new System.EventHandler(this.cmbItemType_SelectedIndexChanged);
+            this.cmbItemType.TabIndex = 1;
+            this.cmbItemType.SelectionChangeCommitted += new System.EventHandler(this.cmbItemType_SelectedIndexChanged);
             // 
             // cmbDescription
             // 
@@ -273,7 +276,7 @@
             this.cmbDescription.Location = new System.Drawing.Point(343, 114);
             this.cmbDescription.Name = "cmbDescription";
             this.cmbDescription.Size = new System.Drawing.Size(121, 23);
-            this.cmbDescription.TabIndex = 22;
+            this.cmbDescription.TabIndex = 3;
             // 
             // cmbPaymentMethod
             // 
@@ -281,7 +284,7 @@
             this.cmbPaymentMethod.Location = new System.Drawing.Point(235, 386);
             this.cmbPaymentMethod.Name = "cmbPaymentMethod";
             this.cmbPaymentMethod.Size = new System.Drawing.Size(121, 23);
-            this.cmbPaymentMethod.TabIndex = 23;
+            this.cmbPaymentMethod.TabIndex = 6;
             // 
             // btnAdd
             // 
@@ -290,9 +293,10 @@
             this.btnAdd.Location = new System.Drawing.Point(713, 108);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 31);
-            this.btnAdd.TabIndex = 24;
+            this.btnAdd.TabIndex = 5;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // lvlProductCategory
             // 
@@ -342,11 +346,11 @@
             // lblNetValue
             // 
             this.lblNetValue.AutoSize = true;
-            this.lblNetValue.Location = new System.Drawing.Point(389, 368);
+            this.lblNetValue.Location = new System.Drawing.Point(370, 368);
             this.lblNetValue.Name = "lblNetValue";
-            this.lblNetValue.Size = new System.Drawing.Size(57, 15);
+            this.lblNetValue.Size = new System.Drawing.Size(85, 15);
             this.lblNetValue.TabIndex = 30;
-            this.lblNetValue.Text = "Net Value";
+            this.lblNetValue.Text = "Total Net Value";
             // 
             // lblDiscountPercent
             // 
@@ -389,7 +393,7 @@
             this.txtCode.Location = new System.Drawing.Point(235, 114);
             this.txtCode.Name = "txtCode";
             this.txtCode.Size = new System.Drawing.Size(102, 23);
-            this.txtCode.TabIndex = 34;
+            this.txtCode.TabIndex = 2;
             // 
             // txtCustomerID
             // 
@@ -407,11 +411,24 @@
             this.txtEmployeeID.TabIndex = 37;
             this.txtEmployeeID.Visible = false;
             // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.Color.Red;
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDelete.Location = new System.Drawing.Point(19, 373);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(78, 26);
+            this.btnDelete.TabIndex = 38;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // TransactionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.txtEmployeeID);
             this.Controls.Add(this.txtCustomerID);
             this.Controls.Add(this.lblCode);
@@ -431,8 +448,8 @@
             this.Controls.Add(this.cmbItemType);
             this.Controls.Add(this.spinQuantity);
             this.Controls.Add(this.txtTotalValue);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.txtDiscountValue);
+            this.Controls.Add(this.txtDiscountPercent);
             this.Controls.Add(this.txtNetValue);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.lblDate);
@@ -454,6 +471,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdTransactionLines)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsTransactionSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinQuantity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsItemSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -477,8 +495,8 @@
         private BindingSource bsTransactionSource;
         private TextBox txtPrice;
         private TextBox txtNetValue;
-        private TextBox textBox4;
-        private TextBox textBox5;
+        private TextBox txtDiscountPercent;
+        private TextBox txtDiscountValue;
         private TextBox txtTotalValue;
         private NumericUpDown spinQuantity;
         private ComboBox cmbItemType;
@@ -498,5 +516,7 @@
         private TextBox txtCode;
         private TextBox txtCustomerID;
         private TextBox txtEmployeeID;
+        private BindingSource bsItemSource;
+        private Button btnDelete;
     }
 }

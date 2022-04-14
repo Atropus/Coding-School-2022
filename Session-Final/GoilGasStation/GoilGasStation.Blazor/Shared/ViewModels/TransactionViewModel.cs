@@ -15,6 +15,7 @@ namespace GoilGasStation.Blazor.Shared.ViewModels
         public Guid EmployeeID { get; set; }
         public decimal TotalValue { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
+        public List<TransactionLineViewModel> TransactionLines { get; set; }
     }
     public class TransactionEditViewModel
     {
@@ -24,6 +25,6 @@ namespace GoilGasStation.Blazor.Shared.ViewModels
         public Guid EmployeeID { get; set; }
         public decimal TotalValue { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
-        public List<TransactionLine> TransactionLines { get; set; }
+        public List<TransactionLineViewModel> TransactionLines { get; set; }
     }
 }

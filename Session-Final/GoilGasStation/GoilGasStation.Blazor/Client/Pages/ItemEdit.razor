@@ -15,7 +15,7 @@ else
     <div class="row">
         <div class="col-md-6">
             <label class="form-label">Code</label>
-            <input class="form-control" @bind="@ItemItem.Code" />
+            <input type="number" min= "10000" class="form-control" @bind="@ItemItem.Code" />
         </div>
         <div class="col-md-6">
             <label class="form-label">Description</label>
@@ -35,11 +35,11 @@ else
         </div>
         <div class="col-md-6">
             <label class="form-label">Price</label>
-            <input class="form-control" @bind="@ItemItem.Price" />
+            <input type="number" min="0" class="form-control" @bind="@ItemItem.Price" />
         </div>
         <div class="col-md-6">
             <label class="form-label">Cost</label>
-            <input class="form-control" @bind="@ItemItem.Cost" />
+            <input type="number" min="0" class="form-control" @bind="@ItemItem.Cost" />
         </div>
     </div>
 
@@ -61,6 +61,7 @@ else
     protected override async Task OnInitializedAsync()
     {
             ItemItem = await httpClient.GetFromJsonAsync<ItemEditViewModel>($"item/{(ID == null ? Guid.Empty : ID)}");
+
     }
 
     protected async Task OnSave()

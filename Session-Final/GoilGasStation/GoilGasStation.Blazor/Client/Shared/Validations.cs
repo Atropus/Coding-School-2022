@@ -14,6 +14,15 @@ namespace GoilGasStation.Blazor.Client.Shared
             else return false;
             
         }
+        public bool Validate(ItemEditViewModel ItemItem)
+        {
+
+            if (ItemItem.Code > 10000 && Convert.ToString(ItemItem.Code).Count() == 5 && ItemItem.Description is not null && ItemItem.ItemType > 0 && ItemItem.Price > 0 && ItemItem.Cost > 0)
+            {
+                return true;
+            }
+            else return false;
+        }
         public bool Validate(EmployeeViewModel employeeViewModel)
         {
 

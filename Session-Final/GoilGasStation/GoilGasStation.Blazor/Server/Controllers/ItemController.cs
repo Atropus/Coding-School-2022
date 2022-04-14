@@ -43,6 +43,19 @@ namespace RedMotors.Blazor.Server.Controllers
                 model.Price = existingItem.Price;
                 model.Cost = existingItem.Cost;
             }
+            else
+            {
+                var itemlist = await _itemRepo.GetAllAsync();
+                if(itemlist.Count()>0)
+                {
+                    var existingItem= await _itemRepo.GetByIdAsync(itemlist[0].ID);
+                    model.Code = itemlist[0].Code +1;
+                }
+                else
+                {
+                    model.Code = 10001;
+                }
+            }
             return model;
         }
         [HttpPost]
