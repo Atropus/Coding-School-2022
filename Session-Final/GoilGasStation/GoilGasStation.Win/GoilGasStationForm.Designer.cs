@@ -77,6 +77,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "GoilGasStationForm";
             this.Text = "Goil Gas Station Client";
+            this.Load += new System.EventHandler(this.GoilGasStationForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

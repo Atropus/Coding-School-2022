@@ -46,10 +46,11 @@ namespace RedMotors.Blazor.Server.Controllers
             else
             {
                 var itemlist = await _itemRepo.GetAllAsync();
-                if(itemlist.Count()>0)
+                if(itemlist.Count() != 0)
                 {
-                    var existingItem= await _itemRepo.GetByIdAsync(itemlist[0].ID);
-                    model.Code = itemlist[0].Code +1;
+                    var maxCode = itemlist.Max(c => c.Code);
+                    //var existingItem= await _itemRepo.GetByIdAsync(itemlist[0].ID);
+                    model.Code = maxCode +1;
                 }
                 else
                 {

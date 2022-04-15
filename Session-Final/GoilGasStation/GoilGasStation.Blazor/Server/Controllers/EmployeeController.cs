@@ -44,7 +44,7 @@ namespace RedMotors.Blazor.Server.Controllers
                 model.Surname = existingEmployee.Surname;
                 model.EmployeeType = existingEmployee.EmployeeType;
                 model.SalaryPerMonth = existingEmployee.SalaryPerMonth;
-                model.HireDateStart = existingEmployee.HireDateStart;
+                model.HireDateStart = (DateTime)existingEmployee.HireDateStart;
                 model.HireDateEnd = existingEmployee.HireDateEnd;
             }
             return model;

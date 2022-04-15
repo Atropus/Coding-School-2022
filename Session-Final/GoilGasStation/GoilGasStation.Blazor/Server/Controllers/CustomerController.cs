@@ -2,6 +2,7 @@
 using GoilGasStation.Model;
 using GoilGasStation.EF.Repositories;
 using GoilGasStation.Blazor.Shared.ViewModels;
+using System.Text.RegularExpressions;
 
 namespace RedMotors.Blazor.Server.Controllers
 {
@@ -31,7 +32,6 @@ namespace RedMotors.Blazor.Server.Controllers
         [HttpGet("{id}")]
         public async Task<CustomerEditViewModel> Get(Guid id)
         {
-            //TODO
             CustomerEditViewModel model = new();
             if (id != Guid.Empty)
             {
@@ -46,8 +46,10 @@ namespace RedMotors.Blazor.Server.Controllers
                 var customerlist = await _customerRepo.GetAllAsync();
                 if(customerlist.Count() != 0)
                 {
-                    var existingCustomer = customerlist.First();
-                    model.CardNumber = "A" + (Convert.ToInt32(existingCustomer.CardNumber.Substring(1, existingCustomer.CardNumber.Count() - 1)) + 1).ToString();
+                    var maxCN = customerlist.Max(c => c.CardNumber);
+                    var newString = Regex.Replace(maxCN, "\\d+", m => (int.Parse(m.Value) + 1).ToString(new string('0', m.Value.Length)));
+                    model.CardNumber = newString;
+                        //"A" + (Convert.ToInt32(existingCustomer.CardNumber.Substring(1, existingCustomer.CardNumber.Count() - 1)) + 1).ToString();
                 }
                 else
                 {
@@ -57,20 +59,6 @@ namespace RedMotors.Blazor.Server.Controllers
             }
             return model;
         }
-        //[HttpGet("CardNumber")]
-        //public async Task<CustomerEditViewModel> GetCardNumber()
-        //{
-        //    CustomerEditViewModel model = new();
-
-        //    var customerlist = await _customerRepo.GetAllAsync();
-        //    var existingCustomer = customerlist.Last();
-        //    model.ID = existingCustomer.ID;
-        //    model.Name = existingCustomer.Name;
-        //    model.Surname = existingCustomer.Surname;
-        //    model.CardNumber = "A"+(Convert.ToInt32(existingCustomer.CardNumber.Substring(1,existingCustomer.CardNumber.Count()-1))+1).ToString();
-
-        //    return model;
-        //}
 
         [HttpPost]
         public async Task Post(CustomerEditViewModel customer)

@@ -164,6 +164,7 @@
             this.btnSave.TabIndex = 7;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // txtCustomerName
             // 
@@ -277,6 +278,7 @@
             this.cmbDescription.Name = "cmbDescription";
             this.cmbDescription.Size = new System.Drawing.Size(121, 23);
             this.cmbDescription.TabIndex = 3;
+            this.cmbDescription.SelectedIndexChanged += new System.EventHandler(this.cmbDescription_SelectedIndexChanged);
             // 
             // cmbPaymentMethod
             // 

@@ -8,7 +8,7 @@ namespace GoilGasStation.Model
     {
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime HireDateStart { get; set; }
+        public DateTime? HireDateStart { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? HireDateEnd { get; set; }

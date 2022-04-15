@@ -28,5 +28,10 @@ namespace GoilGasStation.Win
             TransactionForm form = new TransactionForm();
             form.ShowDialog();
         }
+
+        private void GoilGasStationForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

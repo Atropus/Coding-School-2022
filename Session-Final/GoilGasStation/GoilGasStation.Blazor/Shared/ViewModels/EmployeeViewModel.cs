@@ -22,6 +22,8 @@ namespace GoilGasStation.Blazor.Shared.ViewModels
         public decimal SalaryPerMonth { get; set; }
         //[EnumDataType(typeof(EmployeeType))]
         public EmployeeType EmployeeType { get; set; }
+        public string? Username { get; set; }
+        public string? Password { get; set; }
     }
 
     public class EmployeeEditViewModel
@@ -38,5 +40,7 @@ namespace GoilGasStation.Blazor.Shared.ViewModels
         public decimal SalaryPerMonth { get; set; }
         //[EnumDataType(typeof(EmployeeType))]
         public EmployeeType EmployeeType { get; set; }
+        public string? Username { get; set; }
+        public string? Password { get; set; }
     }
 }
