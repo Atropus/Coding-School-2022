@@ -16,12 +16,10 @@ namespace GoilGasStation.Win
     public partial class LoginForm : Form
     {
         EmployeeManager _employeeManager = new();
-        private EmployeeViewModel _employeeViewModel;
         public LoginForm()
         {
             InitializeComponent();
             this.CenterToParent();
-            _employeeViewModel = new EmployeeViewModel();
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -38,11 +36,8 @@ namespace GoilGasStation.Win
 
         private void LoginForm_KeyPress(object? sender, KeyPressEventArgs e)
         {
-
             if (e.KeyChar != 13) return;
             Authenticate();
-
-
         }
         private async void Authenticate()
         {
@@ -52,7 +47,13 @@ namespace GoilGasStation.Win
                 
                 var employeelist = await _employeeManager.GetEmployees();
                 var users = employeelist.Where(x => x.Password is not null && x.Username is not null).ToList();
-                if (users is not null)
+                if (txtUsername.Text == "admin" && txtPassword.Text == "admin")
+                {
+                    GoilGasStationForm adminform = new GoilGasStationForm();
+                    adminform.ShowDialog();
+                    this.Close();
+                }
+                else if (users is not null)
                 {
                     
                     var existinguser = users.Find(y => y.Password.Equals(txtPassword.Text) && y.Username.Equals(txtUsername.Text));
@@ -66,22 +67,12 @@ namespace GoilGasStation.Win
                         return;
                     }
 
-                }
-                else if (txtUsername.Text == "admin" && txtPassword.Text == "admin")
-                {
-                    GoilGasStationForm adminform = new GoilGasStationForm();
-                    adminform.ShowDialog();
-                    this.Close();
-                }
-                
+                } 
                 GoilGasStationForm form = new GoilGasStationForm(emid);
                 form.ShowDialog();
                 this.Close();
-
-            }
-            
+            }           
         }
-
         private void btnLogin_Click(object sender, EventArgs e)
         {
             Authenticate();

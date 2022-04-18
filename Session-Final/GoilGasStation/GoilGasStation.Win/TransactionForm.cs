@@ -275,7 +275,6 @@ namespace GoilGasStation.Win
                 _itemViewModel.Code = item.FirstOrDefault(i => i.ID != Guid.Empty).Code;
                 _itemViewModel.Price = item.FirstOrDefault(i => i.ID != Guid.Empty).Price;
             }
-
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
@@ -290,21 +289,20 @@ namespace GoilGasStation.Win
                 {
                     if (_transactionViewModel.ID == Guid.Empty)
                     {
-
                         _transactionManager.CreateTransaction(_transactionViewModel);
-
-
                     }
                     else
                     {
                         _transactionManager.PutTransaction(_transactionViewModel);
                     }
-
                 }
                 this.Close();
-
             }
-            MessageBox.Show(this, "Please input a Line", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            else
+            {
+                MessageBox.Show(this, "Please input a Line", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            
         }
 
 

@@ -34,7 +34,7 @@ namespace GoilGasStation.Win
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            if (txtCode.Text is not null && txtDescription.Text is not null && txtPrice.Text is not null && txtCost.Text is not null && cmbItemType.SelectedIndex > 0)
+            if (txtCode.Text is not null && txtDescription.Text is not null && txtPrice.Text is not null && txtCost.Text is not null && cmbItemType.SelectedIndex >= 0)
             {
                 if (_itemViewModel.ID == Guid.Empty)
                 {

@@ -57,6 +57,10 @@
         {
             var employeelist = await httpClient.GetFromJsonAsync<List<EmployeeViewModel>>("https://localhost:7069/Employee");
             var users = employeelist.Where(x => x.Password is not null && x.Username is not null).ToList();
+            if (EmployeeItem.Username == "admin" && EmployeeItem.Password == "admin")
+            {
+                navigationManager.NavigateTo("/index");
+            }
             if (users is not null)
             {
                 existinguser = users.Find(y => y.Password.Equals(EmployeeItem.Password) && y.Username.Equals(EmployeeItem.Username));
@@ -77,18 +81,10 @@
 
                         navigationManager.NavigateTo($"/Index");
                     }
-                }
-                else
-                {
                     await jsRuntime.InvokeVoidAsync("window.alert", "Please check Username or Password");
-                    //MessageBox.Show("Wrong Username or Password, please try again.", "Try Again");
                     return;
                 }
 
-            }
-            else if (EmployeeItem.Username == "admin" && EmployeeItem.Password == "admin")
-            {
-                navigationManager.NavigateTo("/index");
             }
         }
     }

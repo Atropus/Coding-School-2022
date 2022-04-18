@@ -70,6 +70,7 @@ namespace RedMotors.Blazor.Server.Controllers
                 DiscountPercent = transactionLine.DiscountPercent,
                 DiscountValue = transactionLine.DiscountValue,
                 TotalValue = transactionLine.TotalValue,
+                
 
             };
             await _transactionLineRepo.CreateAsync(newTransactionLine);

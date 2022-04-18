@@ -34,7 +34,7 @@ namespace RedMotors.Blazor.Server.Controllers
         [HttpGet("{id}")]
         public async Task<TransactionEditViewModel> Get(Guid id)
         {
-            
+
             TransactionEditViewModel model = new();
             if (id != Guid.Empty)
             {
@@ -52,17 +52,32 @@ namespace RedMotors.Blazor.Server.Controllers
         }
 
         [HttpPost]
-        public async Task Post(TransactionEditViewModel transaction)
+        public async Task Post(TransactionViewModel transaction)
         {
 
-            var newTransaction = new Transaction
+            var newTransaction = new Transaction();
+
+            newTransaction.Date = transaction.Date;
+            newTransaction.CustomerID = transaction.CustomerID;
+            newTransaction.EmployeeID = transaction.EmployeeID;
+            newTransaction.TotalValue = transaction.TotalValue;
+            newTransaction.PaymentMethod = transaction.PaymentMethod;
+            newTransaction.TransactionLines = new();
+            foreach (var line in transaction.TransactionLines)
             {
-                Date = transaction.Date,
-                CustomerID = transaction.CustomerID,
-                EmployeeID = transaction.EmployeeID,
-                TotalValue = transaction.TotalValue,
-                PaymentMethod = transaction.PaymentMethod
-            };
+                newTransaction.TransactionLines.Add(new TransactionLine()
+                {
+                    TransactionID = newTransaction.ID,
+                    ItemID = line.ItemID,
+                    Quantity = line.Quantity,
+                    ItemPrice = line.ItemPrice,
+                    NetValue = line.NetValue,
+                    DiscountPercent = line.DiscountPercent,
+                    DiscountValue = line.DiscountValue,
+                    TotalValue = line.TotalValue,
+                });
+            }
+
             await _transactionRepo.CreateAsync(newTransaction);
         }
 
