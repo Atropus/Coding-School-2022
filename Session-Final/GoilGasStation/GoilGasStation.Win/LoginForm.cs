@@ -48,41 +48,38 @@ namespace GoilGasStation.Win
         {
             if (txtUsername.Text != string.Empty && txtPassword.Text != string.Empty)
             {
+                var emid = Guid.Empty;
+                
                 var employeelist = await _employeeManager.GetEmployees();
-                if (employeelist is not null) 
-                { 
-                  var existinguser = employeelist.Find(x => x.Username.Equals(txtUsername.Text));
-                  var existingpass = employeelist.Find(x => x.Password.Equals(txtPassword.Text));
-                    if (existinguser is not null && existingpass is not null)
+                var users = employeelist.Where(x => x.Password is not null && x.Username is not null).ToList();
+                if (users is not null)
+                {
+                    
+                    var existinguser = users.Find(y => y.Password.Equals(txtPassword.Text) && y.Username.Equals(txtUsername.Text));
+                    if (existinguser != null)
                     {
-                        GoilGasStationForm form = new GoilGasStationForm();
-                        form.ShowDialog();
+                        emid = existinguser.ID;
                     }
+                    else
+                    {
+                        MessageBox.Show("Wrong Username or Password, please try again.", "Try Again");
+                        return;
+                    }
+
                 }
+                else if (txtUsername.Text == "admin" && txtPassword.Text == "admin")
+                {
+                    GoilGasStationForm adminform = new GoilGasStationForm();
+                    adminform.ShowDialog();
+                    this.Close();
+                }
+                
+                GoilGasStationForm form = new GoilGasStationForm(emid);
+                form.ShowDialog();
+                this.Close();
 
             }
-            MessageBox.Show("Wrong Username or Password, please try again.", "Try Again");
-            //Employee user = new Employee();
-            //user.Username = txtUsername.Text;
-            //user.Password = txtPassword.Text;
-
-            if (txtUsername.Text!=string.Empty && txtPassword.Text!=string.Empty)
-            {
-                
-                
-            }
-            else if (2 == Auth())
-            {
-                this.Close();
-            }
-            else if (3 == Auth())
-            {
-                this.Close();
-            }
-            else if (0 == Auth())
-            {
-                MessageBox.Show("Wrong Username or Password, please try again.", "Try Again");
-            }
+            
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -90,22 +87,5 @@ namespace GoilGasStation.Win
             Authenticate();
         }
 
-        public int Auth()
-        {
-            //1.Manager 2.Staff 3.Cashier
-            if (txtUsername.Text == "admin" && txtPassword.Text == "admin")
-            {
-                return 1;
-            }
-            else if(txtUsername.Text == "staff" && txtPassword.Text == "staff")
-            {
-                return 2;
-            }
-            else if (txtUsername.Text == "cashier" && txtPassword.Text == "cashier")
-            {
-                return 3;
-            }
-            return 0;  
-        }
     }
 }

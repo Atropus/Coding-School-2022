@@ -163,6 +163,8 @@
             this.Controls.Add(this.lblPrice);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.lblCode);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "NewItemForm";
             this.Text = "Item";
             this.Load += new System.EventHandler(this.NewItemForm_Load);

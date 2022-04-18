@@ -98,6 +98,7 @@
             this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

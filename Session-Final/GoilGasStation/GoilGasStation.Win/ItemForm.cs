@@ -36,6 +36,7 @@ namespace GoilGasStation.Win
         {
             grdItemList.ReadOnly = true;
             await RefreshData();
+            Refresh();
 
         }
         private async Task RefreshData()
@@ -47,6 +48,7 @@ namespace GoilGasStation.Win
         }
         private void Refresh()
         {
+            //Thread.Sleep(3000);
             grdItemList.Update();
             grdItemList.Refresh();
             grdItemList.Columns["ID"].Visible = false;
@@ -62,6 +64,7 @@ namespace GoilGasStation.Win
             itemEdit.ShowDialog();
 
             await RefreshData();
+            Refresh();
         }
 
         private async void btnDeleteItem_Click(object sender, EventArgs e)
@@ -73,6 +76,7 @@ namespace GoilGasStation.Win
             _itemManager.DeleteItem(item);
 
             await RefreshData();
+            Refresh();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

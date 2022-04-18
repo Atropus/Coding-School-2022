@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -56,18 +57,30 @@ namespace GoilGasStation.Win
             txtCardNumber.DataBindings.Add(new Binding("Text", bsCustomerSource, "CardNumber", true));
         }
 
-        private void NewCustomerForm_Load(object sender, EventArgs e)
+        private async void NewCustomerForm_Load(object sender, EventArgs e)
         {
-
+            txtCardNumber.ReadOnly = true;
             if (_customerViewModel == null)
             {
                 _customerViewModel = new CustomerViewModel();
-                _customerViewModel.CardNumber = "e.x. A10001, A10002";
+                var customerlist = await _customerManager.GetCustomers();
+                if (customerlist.Count() !=0)
+                {
+                    var maxCN = customerlist.Max(c => c.CardNumber);
+                    var newString = Regex.Replace(maxCN, "\\d+", m => (int.Parse(m.Value) + 1).ToString(new string('0', m.Value.Length)));
+                    _customerViewModel.CardNumber = newString;
+                    txtCardNumber.Text = newString;
+                        
+                }
+                else
+                {
+                    _customerViewModel.CardNumber = "A10001";
+                    txtCardNumber.Text = "A10001";
+                }
             }
             bsCustomerSource.DataSource = _customerViewModel;
             SetDataBindings();
-            
-            //txtCardNumber.Font = new Font("Arial", 10, FontStyle.Italic, GraphicsUnit.Point);
+ 
         }
         
 

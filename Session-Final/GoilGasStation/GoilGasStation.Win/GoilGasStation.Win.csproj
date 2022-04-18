@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GoilGasStation.Blazor\Client\GoilGasStation.Blazor.Client.csproj" />
     <ProjectReference Include="..\GoilGasStation.Blazor\Shared\GoilGasStation.Blazor.Shared.csproj" />
     <ProjectReference Include="..\GoilGasStation.EF\GoilGasStation.EF.csproj" />
     <ProjectReference Include="..\GoilGasStation.Model\GoilGasStation.Model.csproj" />

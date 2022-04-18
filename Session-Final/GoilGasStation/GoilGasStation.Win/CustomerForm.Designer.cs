@@ -125,6 +125,8 @@
             this.Controls.Add(this.btnEditCustomer);
             this.Controls.Add(this.btnNewCustomer);
             this.Controls.Add(this.grdCustomerList);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "CustomerForm";
             this.Text = "Customer List";
             this.Load += new System.EventHandler(this.CustomerForm_Load);

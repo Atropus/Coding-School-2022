@@ -27,7 +27,9 @@ namespace RedMotors.Blazor.Server.Controllers
                 EmployeeType = employee.EmployeeType,
                 SalaryPerMonth = employee.SalaryPerMonth,
                 HireDateStart = employee.HireDateStart,
-                HireDateEnd = employee.HireDateEnd
+                HireDateEnd = employee.HireDateEnd,
+                Username = employee.Username,
+                Password = employee.Password,
 
 
             });
@@ -46,6 +48,8 @@ namespace RedMotors.Blazor.Server.Controllers
                 model.SalaryPerMonth = existingEmployee.SalaryPerMonth;
                 model.HireDateStart = (DateTime)existingEmployee.HireDateStart;
                 model.HireDateEnd = existingEmployee.HireDateEnd;
+                model.Username = existingEmployee.Username;
+                model.Password = existingEmployee.Password;
             }
             return model;
         }
@@ -59,7 +63,9 @@ namespace RedMotors.Blazor.Server.Controllers
                 EmployeeType = employee.EmployeeType,
                 SalaryPerMonth = employee.SalaryPerMonth,
                 HireDateStart = employee.HireDateStart,
-                HireDateEnd = employee.HireDateEnd
+                HireDateEnd = employee.HireDateEnd,
+                Username = employee.Username,
+                Password = employee.Password,
             };
             await _employeeRepo.CreateAsync(newEmployee);
         }
@@ -82,6 +88,8 @@ namespace RedMotors.Blazor.Server.Controllers
             employeeToUpdate.SalaryPerMonth = employee.SalaryPerMonth;
             employeeToUpdate.HireDateStart = employee.HireDateStart;
             employeeToUpdate.HireDateEnd = employee.HireDateEnd;
+            employeeToUpdate.Username = employee.Username;
+            employeeToUpdate.Password = employee.Password;
             await _employeeRepo.UpdateAsync(employee.ID, employeeToUpdate);
             return Ok();
         }

@@ -122,6 +122,8 @@
             this.Controls.Add(this.lblCardNumber);
             this.Controls.Add(this.lblSurname);
             this.Controls.Add(this.lblName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "NewCustomerForm";
             this.Text = "NewCustomerForm";
             this.Load += new System.EventHandler(this.NewCustomerForm_Load);

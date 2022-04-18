@@ -18,18 +18,21 @@ namespace GoilGasStation.Win
         private TransactionManager _transactionManager = new();
         private TransactionViewModel _transactionViewModel;
         private TransactionLineManager _transactionLineManager = new();
-        private TransactionLineViewModel _transactionLineViewModel;
+        private TransactionLineViewModel _transactionLineViewModel = new();
         private CustomerManager _customerManager = new();
         private CustomerViewModel _customerViewModel;
         private ItemManager _itemManager = new();
         private ItemViewModel _itemViewModel;
         private EmployeeViewModel _employeeViewModel;
         private EmployeeManager _employeeManager = new();
+        private Guid _employeeID;
+        
 
-        public TransactionForm()
+        public TransactionForm(Guid employeeID)
         {
             InitializeComponent();
             this.CenterToParent();
+            _employeeID = employeeID;
         }
 
         private void TransactionForm_Load(object sender, EventArgs e)
@@ -40,7 +43,6 @@ namespace GoilGasStation.Win
                 _transactionViewModel = new TransactionViewModel();
                 _transactionViewModel.TransactionLines = new();
             }
-            txtDate.Text = Convert.ToString(DateTime.UtcNow);
             cmbItemType.Enabled = false;
             txtCode.Enabled = false;
             cmbDescription.Enabled = false;
@@ -48,8 +50,7 @@ namespace GoilGasStation.Win
             bsItemSource.DataSource = _itemViewModel;
             bsTransactionSource.DataSource = _transactionViewModel;
             spinQuantity.Minimum = 0;
-            //cmbItemType.SelectedIndex = -1;
-            //cmbItemType.Text = "Choose a Category";
+
             SetDataBinding();
         }
 
@@ -58,12 +59,26 @@ namespace GoilGasStation.Win
         {
             await _itemManager.GetItems();
             cmbItemType.DataSource = Enum.GetValues(typeof(ItemType));
-            cmbItemType.DataBindings.Add(new Binding("Text", bsItemSource, "ItemType", true));
+            cmbItemType.DataBindings.Add(new Binding("SelectedValue", bsItemSource, "ItemType", true));
             txtCode.DataBindings.Add(new Binding("Text", bsItemSource, "Code", true));
             cmbDescription.DataBindings.Add(new Binding("Text", bsItemSource, "Description", true));
             txtPrice.DataBindings.Add(new Binding("Text", bsItemSource, "Price", true));
             cmbPaymentMethod.DataSource = Enum.GetValues(typeof(PaymentMethod));
-            cmbPaymentMethod.DataBindings.Add(new Binding("Text", bsTransactionSource, "PaymentMethod", true));
+            cmbPaymentMethod.DataBindings.Add(new Binding("SelectedValue", bsTransactionSource, "PaymentMethod", true));
+            txtCustomerID.DataBindings.Add(new Binding("Text", bsTransactionSource, "CustomerID", true));
+            txtTotalValue.DataBindings.Add(new Binding("Text", bsTransactionSource, "TotalValue", true));
+            txtDate.DataBindings.Add(new Binding("Text", bsTransactionSource, "Date", true));
+            txtDate.Text = Convert.ToString(DateTime.UtcNow);
+            txtEmployeeID.DataBindings.Add(new Binding("Text", bsTransactionSource, "EmployeeID", true));
+            _transactionViewModel.EmployeeID = _employeeID;
+            var employeelist = await _employeeManager.GetEmployees();
+            var currentemployee = employeelist.Find(e => e.ID == _employeeID);
+            if (currentemployee != null)
+            {
+                txtUserName.Text = currentemployee.Name;
+                txtUserSurname.Text = currentemployee.Surname;
+            }
+            cmbItemType.SelectedIndex = 0;
         }
         private void RefreshTransData()
         {
@@ -88,9 +103,7 @@ namespace GoilGasStation.Win
             grdTransactionLines.Columns["ID"].Visible = false;
             grdTransactionLines.Columns["TransactionID"].Visible = false;
             grdTransactionLines.Columns["ItemID"].Visible = false;
-            //grdTransactionLines.Columns["DiscountPercent"].Visible = false;
-            //grdTransactionLines.Columns["DiscountValue"].Visible = false;
-            //grdTransactionLines.Columns["TotalValue"].Visible = false;
+
         }
 
 
@@ -115,6 +128,7 @@ namespace GoilGasStation.Win
                     txtCustomerName.Text = customer.Name;
                     txtCustomerSurname.Text = customer.Surname;
                     txtCustomerID.Text = Convert.ToString(customer.ID);
+                    _transactionViewModel.CustomerID = customer.ID;
                     cmbItemType.Enabled = true;
                     txtCode.Enabled = true;
                     cmbDescription.Enabled = true;
@@ -122,36 +136,26 @@ namespace GoilGasStation.Win
                 }
                 else if (customer is null)
                 {
-                    MessageBox.Show(this, "Wrong Card Number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    var result = MessageBox.Show(this, "Wrong Card Number, Do you want to Create a Customer?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    
+                    if ( result == DialogResult.Yes )
+                    {
+                        CustomerForm form = new CustomerForm();
+                        form.ShowDialog();
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        return;
+                    }
+
                 }
             }
-            //MessageBox.Show(this, "Wrong Card Number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private async void cmbItemType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            txtCode.Text = String.Empty;
-            cmbDescription.DataSource = null;
-            spinQuantity.Value = 1;
-            txtPrice.Text = String.Empty;
-
-            var itemlist = await _itemManager.GetItems();
-            var item = itemlist.Where(i => (int)i.ItemType == cmbItemType.SelectedIndex).ToList();
-            cmbDescription.DataSource = item;
-            cmbDescription.DisplayMember = "Description";
-            cmbDescription.ValueMember = "ID";
-            if (cmbItemType.SelectedIndex >= 0 && item is not null && itemlist is not null)
-            {
-                _itemViewModel.ID = item.FirstOrDefault(i => i.ID != Guid.Empty).ID;
-                _itemViewModel.Code = item.FirstOrDefault(i => i.ID != Guid.Empty).Code;
-                _itemViewModel.Description = item.FindAll(i => i.Description != null).ToString();
-                _itemViewModel.Price = item.FirstOrDefault(i => i.ID != Guid.Empty).Price;
-            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -171,6 +175,11 @@ namespace GoilGasStation.Win
             }
             if (netValueTotal >= 20)
             {
+                if (netValueTotal >= 50)
+                {
+                    cmbPaymentMethod.Enabled = false;
+                    cmbPaymentMethod.SelectedIndex = 1;
+                }
                 txtDiscountPercent.Text = "10%";
                 for (int i = 0; i < grdTransactionLines.Rows.Count; i++)
                 {
@@ -178,8 +187,8 @@ namespace GoilGasStation.Win
                     if (ii >= 0)
                     {
                         _transactionViewModel.TransactionLines[ii].DiscountPercent = 0.10M;
-                        _transactionViewModel.TransactionLines[ii].DiscountValue = newTransLine.NetValue * _transactionViewModel.TransactionLines[ii].DiscountPercent;
-                        _transactionViewModel.TransactionLines[ii].TotalValue = newTransLine.NetValue - _transactionViewModel.TransactionLines[ii].DiscountValue;
+                        _transactionViewModel.TransactionLines[ii].DiscountValue = _transactionViewModel.TransactionLines[ii].NetValue * _transactionViewModel.TransactionLines[ii].DiscountPercent;
+                        _transactionViewModel.TransactionLines[ii].TotalValue = _transactionViewModel.TransactionLines[ii].NetValue - _transactionViewModel.TransactionLines[ii].DiscountValue;
                     }
                 }
                 newTransLine.DiscountPercent = 0.10M;
@@ -196,35 +205,81 @@ namespace GoilGasStation.Win
             RefreshTransData();
 
         }
-        private async void cmbItemType_SelectedValueChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            //if (grdTransactionLines.SelectedRows.Count != 1)
-            //    return;
+            decimal netValueTotal = 0.00M;
+            var newTransLine = new TransactionLineViewModel();
+            if (grdTransactionLines.SelectedRows.Count != 1)
+                return;
+            var selectedindex = grdTransactionLines.CurrentRow.Index;
+            var deletetransline = (TransactionLineViewModel)grdTransactionLines.Rows[index: selectedindex].DataBoundItem;
+            _transactionViewModel.TransactionLines.Remove(deletetransline);
+            RefreshTransLineData();
+            for (int i = 0; i < grdTransactionLines.Rows.Count; i++)
+            {
+                netValueTotal += Convert.ToDecimal(grdTransactionLines.Rows[i].Cells[5].Value);
 
-            //_transactionViewModel.TransactionLines temp = (_transactionViewModel.TransactionLines)grdTransactionLines.SelectedRows
-            //var item = (TransactionViewModel)grdTransactionLines.SelectedRows[index: 0].DataBoundItem;
-            //_transactionViewModel.TransactionLines[item] 
-
-
-            //RefreshTransLineData();
-            //RefreshTransData(); ;
+            }
+            if (netValueTotal >= 20)
+            {
+                txtDiscountPercent.Text = "10%";
+                if (netValueTotal >= 50)
+                {
+                    cmbPaymentMethod.Enabled = false;
+                    cmbPaymentMethod.SelectedIndex = 1;
+                }
+                else if (netValueTotal <50)
+                {
+                    cmbPaymentMethod.Enabled = true;
+                    cmbPaymentMethod.SelectedIndex = 0;
+                }
+                
+                for (int i = 0; i < grdTransactionLines.Rows.Count; i++)
+                {
+                    var ii = _transactionViewModel.TransactionLines.FindIndex(c => c.DiscountPercent == 0);
+                    if (ii >= 0)
+                    {
+                        _transactionViewModel.TransactionLines[ii].DiscountPercent = 0.10M;
+                        _transactionViewModel.TransactionLines[ii].DiscountValue = _transactionViewModel.TransactionLines[ii].NetValue * _transactionViewModel.TransactionLines[ii].DiscountPercent;
+                        _transactionViewModel.TransactionLines[ii].TotalValue = _transactionViewModel.TransactionLines[ii].NetValue - _transactionViewModel.TransactionLines[ii].DiscountValue;
+                    }
+                }
+                newTransLine.DiscountPercent = 0.10M;
+                newTransLine.DiscountValue = newTransLine.NetValue * newTransLine.DiscountPercent;
+                newTransLine.TotalValue = newTransLine.NetValue - newTransLine.DiscountValue;
+            }
+            else
+            {
+                for (int i = 0; i < grdTransactionLines.Rows.Count; i++)
+                {
+                    var ii = _transactionViewModel.TransactionLines.FindIndex(c => c.DiscountPercent > 0);
+                    if (ii >= 0)
+                    {
+                        _transactionViewModel.TransactionLines[ii].DiscountPercent = 0.00M;
+                        _transactionViewModel.TransactionLines[ii].DiscountValue = _transactionViewModel.TransactionLines[ii].NetValue * _transactionViewModel.TransactionLines[ii].DiscountPercent;
+                        _transactionViewModel.TransactionLines[ii].TotalValue = _transactionViewModel.TransactionLines[ii].NetValue - _transactionViewModel.TransactionLines[ii].DiscountValue;
+                    }
+                }
+                txtDiscountPercent.Text = "0%";
+                newTransLine.DiscountPercent = 0.00M;
+                newTransLine.DiscountValue = newTransLine.NetValue * newTransLine.DiscountPercent;
+                newTransLine.TotalValue = newTransLine.NetValue - newTransLine.DiscountValue;
+            }
+            RefreshTransLineData();
+            RefreshTransData();
         }
 
         private async void cmbDescription_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtCode.Text = String.Empty;
-            //cmbItemType.SelectedIndex = 0;
+            //txtCode.Text = String.Empty;
+            ////cmbItemType.SelectedIndex = 0;
             spinQuantity.Value = 1;
-            txtPrice.Text = String.Empty;
+            //txtPrice.Text = String.Empty;
 
             var itemlist = await _itemManager.GetItems();
             var item = itemlist.Where(i => i.Description == cmbDescription.Text).ToList();
-            if (cmbDescription.SelectedIndex >= 0 && item is not null && itemlist is not null)
+            if (cmbDescription.SelectedIndex >= 0 && item is not null && itemlist is not null && item.Count()> 0)
             {
                 _itemViewModel.ID = item.FirstOrDefault(i => i.ID != Guid.Empty).ID;
                 _itemViewModel.Code = item.FirstOrDefault(i => i.ID != Guid.Empty).Code;
@@ -235,10 +290,11 @@ namespace GoilGasStation.Win
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            //var el = await _employeeManager.GetEmployees();
-            //var empl = el.FirstOrDefault(i => i.ID != Guid.Empty).ID;
-            //_transactionViewModel.EmployeeID = empl;
-            if (_transactionViewModel is not null && _transactionLineViewModel is not null)
+            _transactionViewModel.Date = Convert.ToDateTime(txtDate.Text);
+            _transactionViewModel.TotalValue = Convert.ToDecimal(txtTotalValue.Text);
+            var enu = cmbPaymentMethod.SelectedIndex;
+            _transactionViewModel.PaymentMethod = (PaymentMethod)enu;
+            if (_transactionViewModel is not null)
             {
                 if (_transactionViewModel.ID == Guid.Empty)
                 {
@@ -251,6 +307,28 @@ namespace GoilGasStation.Win
                     _transactionManager.PutTransaction(_transactionViewModel);
                 }
             }
+            this.Close();
+        }
+
+        private async void cmbItemType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //txtCode.Text = String.Empty;
+            cmbDescription.DataSource = null;
+            //spinQuantity.Value = 1;
+            //txtPrice.Text = String.Empty;
+
+            var itemlist = await _itemManager.GetItems();
+            var item = itemlist.Where(i => (int)i.ItemType == cmbItemType.SelectedIndex).ToList();
+            cmbDescription.DataSource = item;
+            cmbDescription.DisplayMember = "Description";
+            cmbDescription.ValueMember = "ID";
+            //if (cmbItemType.SelectedIndex >= 0 && item is not null && itemlist is not null)
+            //{
+            //    _itemViewModel.ID = item.FirstOrDefault(i => i.ID != Guid.Empty).ID;
+            //    _itemViewModel.Code = item.FirstOrDefault(i => i.ID != Guid.Empty).Code;
+            //    _itemViewModel.Description = item.FindAll(i => i.Description != null).ToString();
+            //    _itemViewModel.Price = item.FirstOrDefault(i => i.ID != Guid.Empty).Price;
+            //}
         }
     }
 }
