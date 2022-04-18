@@ -52,17 +52,20 @@
 @code {
     LedgerViewModel monthlyLedger = new LedgerViewModel();
     public MonthNumbers monthNumbers = new();
-    //private bool isLoading = true;
 
     protected async Task ProduceLedger()
     {
 
         int ledgeryear = Convert.ToInt32(monthlyLedger.Year);
         int ledgermonth = (int)monthNumbers;
-        //monthlyLedger = GetLedger(ledgeryear, ledgermonth);
-        monthlyLedger = await httpClient.GetFromJsonAsync<LedgerViewModel>($"MonthlyLedger/{ledgeryear}/{ledgermonth}");
-        //isLoading = false;
-
+        try
+        {
+            monthlyLedger = await httpClient.GetFromJsonAsync<LedgerViewModel>($"MonthlyLedger/{ledgeryear}/{ledgermonth}");
+        }
+        catch(Exception ex)
+        {
+            
+        }
     }
 
 }
