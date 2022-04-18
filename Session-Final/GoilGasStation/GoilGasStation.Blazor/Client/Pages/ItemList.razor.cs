@@ -24,11 +24,26 @@ namespace GoilGasStation.Blazor.Client.Pages
 
         async Task AddItem()
         {
-            navigationManager.NavigateTo("/ItemList/edit");
+            if (navigationManager.Uri.Contains("Staff"))
+            {
+                navigationManager.NavigateTo("/Staff/ItemList/edit");
+            }
+            else
+            {
+                navigationManager.NavigateTo("/ItemList/edit");
+            }
+                
         }
         async Task EditItem(ItemViewModel itemToEdit)
         {
-            navigationManager.NavigateTo($"/ItemList/edit/{itemToEdit.ID}");
+            if (navigationManager.Uri.Contains("Staff"))
+            {
+                navigationManager.NavigateTo($"/Staff/ItemList/edit/{itemToEdit.ID}");
+            }
+            else
+            {
+                navigationManager.NavigateTo($"/ItemList/edit/{itemToEdit.ID}");
+            }
         }
         async Task DeleteItem(ItemViewModel itemToDelete)
         {

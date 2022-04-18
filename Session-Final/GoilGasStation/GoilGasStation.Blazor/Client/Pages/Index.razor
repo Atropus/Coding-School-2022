@@ -1,5 +1,4 @@
-﻿@page "/"
-@*@page "/index/{ID:guid}"*@
+﻿@page "/index"
 @using GoilGasStation.Blazor.Shared.ViewModels
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
@@ -13,13 +12,6 @@
 
 
 @code{
-    [Parameter]public Guid ID { get; set; }
 
-    //protected override async void OnInitializedAsync()
-    //{
-    //    var employee = httpClient.GetFromJsonAsync<EmployeeViewModel>($"/Employee/{ID}");
-    //    if()
-
-    //}
 
 }

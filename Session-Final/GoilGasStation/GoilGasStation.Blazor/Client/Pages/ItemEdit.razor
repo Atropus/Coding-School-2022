@@ -1,4 +1,5 @@
 ﻿@page "/ItemList/edit/{Id:guid?}"
+@page "/Staff/ItemList/edit/{Id:guid?}"
 @using global::GoilGasStation.Blazor.Shared.ViewModels
 @using GoilGasStation.Model.Entities
 @inject HttpClient httpClient
@@ -53,14 +54,13 @@ else
 
 @code {
     [Parameter] public Guid? ID { get; set; }
-    //private ItemViewModel itemView = new();
     ItemEditViewModel ItemItem { get; set; } = new();
 
 
 
     protected override async Task OnInitializedAsync()
     {
-            ItemItem = await httpClient.GetFromJsonAsync<ItemEditViewModel>($"item/{(ID == null ? Guid.Empty : ID)}");
+        ItemItem = await httpClient.GetFromJsonAsync<ItemEditViewModel>($"item/{(ID == null ? Guid.Empty : ID)}");
 
     }
 
@@ -76,11 +76,25 @@ else
             response = await httpClient.PutAsJsonAsync("item", ItemItem);
         }
         response.EnsureSuccessStatusCode();
-        navigationManager.NavigateTo("ItemList");
+        if (navigationManager.Uri.Contains("Staff"))
+        {
+            navigationManager.NavigateTo("/Staff/ItemList");
+        }
+        else
+        {
+            navigationManager.NavigateTo("ItemList");
+        }
     }
 
     protected void OnCancel()
     {
-        navigationManager.NavigateTo("ItemList");
+        if (navigationManager.Uri.Contains("Staff"))
+        {
+            navigationManager.NavigateTo("/Staff/ItemList");
+        }
+        else
+        {
+            navigationManager.NavigateTo("ItemList");
+        }
     }
 }

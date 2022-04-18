@@ -1,4 +1,5 @@
-﻿@page "/login"
+﻿@layout LoginLayout
+@page "/"
 @using GoilGasStation.Blazor.Shared.ViewModels
 
 @inject NavigationManager navigationManager
@@ -15,25 +16,19 @@
                     <div class="row g-0">
                         <div class="col-md-6 col-lg-6 d-flex align-items-center">
                             <div class="card-body p-4 p-lg-5 text-black">
-
                                 <form>
-
                                     <h4 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Manager Account</h4>
-
                                     <div class="form-outline mb-4">
                                         <input @bind="@EmployeeItem.Username" class="form-control form-control-lg" placeholder="Enter Username" />
                                         <label class="form-label" for="form2Example17">Username</label>
                                     </div>
-
                                     <div class="form-outline mb-4">
                                         <input @bind="EmployeeItem.Password" type="password" @onkeyup=InputOnEnterClick id="passwordForm" class="form-control form-control-lg" />
                                         <label class="form-label" for="form2Example27" placeholder="Enter Password">Password</label>
                                     </div>
-
                                     <div class="pt-1 mb-4">
                                         <button class="btn btn-dark btn-lg btn-block" type="button" @onclick="() => Authenticate()"> Login</button>
                                     </div>
-
                                     <a href="" class="small text-muted">Create A Username</a>
                                 </form>
                             </div>
@@ -64,24 +59,23 @@
             var users = employeelist.Where(x => x.Password is not null && x.Username is not null).ToList();
             if (users is not null)
             {
-                var emid = Guid.Empty;
                 existinguser = users.Find(y => y.Password.Equals(EmployeeItem.Password) && y.Username.Equals(EmployeeItem.Username));
                 if (existinguser != null)
                 {
                     if (existinguser.EmployeeType == EmployeeType.Cashier)
                     {
 
-                        navigationManager.NavigateTo($"/index/{existinguser.ID}");
+                        navigationManager.NavigateTo($"/{existinguser.EmployeeType}/CustomerList");
                     }
                     if (existinguser.EmployeeType == EmployeeType.Staff)
                     {
 
-                        navigationManager.NavigateTo($"/index/{existinguser.ID}");
+                        navigationManager.NavigateTo($"/{existinguser.EmployeeType}/ItemList");
                     }
                     if (existinguser.EmployeeType == EmployeeType.Manager)
                     {
 
-                        navigationManager.NavigateTo("/index");
+                        navigationManager.NavigateTo($"/Index");
                     }
                 }
                 else
@@ -96,14 +90,7 @@
             {
                 navigationManager.NavigateTo("/index");
             }
-
-
-
         }
-    }
-    internal void CheckUser()
-    {
-
     }
 
     private async void InputOnEnterClick(KeyboardEventArgs e)

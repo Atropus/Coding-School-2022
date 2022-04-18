@@ -1,4 +1,5 @@
 ﻿@page "/CustomerList/edit/{Id:guid?}"
+@page "/Cashier/CustomerList/edit/{Id:guid?}"
 @using global::GoilGasStation.Blazor.Shared.ViewModels
 @inject HttpClient httpClient
 @inject NavigationManager navigationManager
@@ -61,11 +62,27 @@ else
             response = await httpClient.PutAsJsonAsync("customer", CustomerItem);
         }
         response.EnsureSuccessStatusCode();
-        navigationManager.NavigateTo("customerlist");
+        if (navigationManager.Uri.Contains("Cashier"))
+        {
+            navigationManager.NavigateTo("Cashier/CustomerList");
+        }
+        else
+        {
+            navigationManager.NavigateTo("customerlist");
+        }
+
     }
 
     protected void OnCancel()
     {
-        navigationManager.NavigateTo("customerlist");
+        if (navigationManager.Uri.Contains("Cashier"))
+        {
+            navigationManager.NavigateTo("Cashier/CustomerList");
+        }
+        else
+        {
+            navigationManager.NavigateTo("customerlist");
+        }
+        
     }
 }

@@ -24,11 +24,26 @@ namespace GoilGasStation.Blazor.Client.Pages
 
         async Task AddCustomer()
         {
-            navigationManager.NavigateTo("/CustomerList/edit");
+            if (navigationManager.Uri.Contains("Cashier"))
+            {
+                navigationManager.NavigateTo("/Cashier/CustomerList/edit");
+            }
+            else
+            {
+                navigationManager.NavigateTo("/CustomerList/edit");
+            }
+                
         }
         async Task EditCustomer(CustomerViewModel customerToEdit)
         {
-            navigationManager.NavigateTo($"/CustomerList/edit/{customerToEdit.ID}");
+            if (navigationManager.Uri.Contains("Cashier"))
+            {
+                navigationManager.NavigateTo($"/Cashier/CustomerList/edit/{customerToEdit.ID}");
+            }
+            else
+            {
+                navigationManager.NavigateTo($"/CustomerList/edit/{customerToEdit.ID}");
+            }
         }
         async Task DeleteCustomer(CustomerViewModel customerToDelete)
         {

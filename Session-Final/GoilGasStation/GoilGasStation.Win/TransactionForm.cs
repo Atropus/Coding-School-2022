@@ -26,7 +26,6 @@ namespace GoilGasStation.Win
         private EmployeeViewModel _employeeViewModel;
         private EmployeeManager _employeeManager = new();
         private Guid _employeeID;
-        
 
         public TransactionForm(Guid employeeID)
         {
@@ -34,7 +33,6 @@ namespace GoilGasStation.Win
             this.CenterToParent();
             _employeeID = employeeID;
         }
-
         private void TransactionForm_Load(object sender, EventArgs e)
         {
             if (_itemViewModel == null && _transactionViewModel == null)
@@ -53,8 +51,6 @@ namespace GoilGasStation.Win
 
             SetDataBinding();
         }
-
-
         private async void SetDataBinding()
         {
             await _itemManager.GetItems();
@@ -91,9 +87,7 @@ namespace GoilGasStation.Win
                 txtDiscountValue.Text = Convert.ToString(double.Parse(txtDiscountValue.Text) + double.Parse(grdTransactionLines.Rows[i].Cells[7].Value.ToString()));
                 txtTotalValue.Text = Convert.ToString(double.Parse(txtTotalValue.Text) + double.Parse(grdTransactionLines.Rows[i].Cells[8].Value.ToString()));
             }
-
         }
-
         private async Task RefreshTransLineData()
         {
             grdTransactionLines.DataSource = null;
@@ -105,8 +99,6 @@ namespace GoilGasStation.Win
             grdTransactionLines.Columns["ItemID"].Visible = false;
 
         }
-
-
         public bool CheckCardNumber(string cardNumber)
         {
             if (cardNumber is not null && cardNumber.Length == 6) return true;
@@ -121,7 +113,6 @@ namespace GoilGasStation.Win
             var customerlist = await _customerManager.GetCustomers();
             if (CheckCardNumber(txtCardNumber.Text) == true && customerlist is not null)
             {
-
                 var customer = customerlist.SingleOrDefault(c => c.CardNumber == txtCardNumber.Text);
                 if (customer is not null)
                 {
@@ -137,8 +128,8 @@ namespace GoilGasStation.Win
                 else if (customer is null)
                 {
                     var result = MessageBox.Show(this, "Wrong Card Number, Do you want to Create a Customer?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                    
-                    if ( result == DialogResult.Yes )
+
+                    if (result == DialogResult.Yes)
                     {
                         CustomerForm form = new CustomerForm();
                         form.ShowDialog();
@@ -147,10 +138,9 @@ namespace GoilGasStation.Win
                     {
                         return;
                     }
-
                 }
             }
-            
+
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -203,12 +193,12 @@ namespace GoilGasStation.Win
             }
             RefreshTransLineData();
             RefreshTransData();
-
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             decimal netValueTotal = 0.00M;
+
             var newTransLine = new TransactionLineViewModel();
             if (grdTransactionLines.SelectedRows.Count != 1)
                 return;
@@ -229,12 +219,12 @@ namespace GoilGasStation.Win
                     cmbPaymentMethod.Enabled = false;
                     cmbPaymentMethod.SelectedIndex = 1;
                 }
-                else if (netValueTotal <50)
+                else if (netValueTotal < 50)
                 {
                     cmbPaymentMethod.Enabled = true;
                     cmbPaymentMethod.SelectedIndex = 0;
                 }
-                
+
                 for (int i = 0; i < grdTransactionLines.Rows.Count; i++)
                 {
                     var ii = _transactionViewModel.TransactionLines.FindIndex(c => c.DiscountPercent == 0);
@@ -279,7 +269,7 @@ namespace GoilGasStation.Win
 
             var itemlist = await _itemManager.GetItems();
             var item = itemlist.Where(i => i.Description == cmbDescription.Text).ToList();
-            if (cmbDescription.SelectedIndex >= 0 && item is not null && itemlist is not null && item.Count()> 0)
+            if (cmbDescription.SelectedIndex >= 0 && item is not null && itemlist is not null && item.Count() > 0)
             {
                 _itemViewModel.ID = item.FirstOrDefault(i => i.ID != Guid.Empty).ID;
                 _itemViewModel.Code = item.FirstOrDefault(i => i.ID != Guid.Empty).Code;
@@ -290,25 +280,33 @@ namespace GoilGasStation.Win
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            _transactionViewModel.Date = Convert.ToDateTime(txtDate.Text);
-            _transactionViewModel.TotalValue = Convert.ToDecimal(txtTotalValue.Text);
-            var enu = cmbPaymentMethod.SelectedIndex;
-            _transactionViewModel.PaymentMethod = (PaymentMethod)enu;
-            if (_transactionViewModel is not null)
+            if (txtTotalValue.Text != "0" || txtNetValue.Text != "")
             {
-                if (_transactionViewModel.ID == Guid.Empty)
+                _transactionViewModel.Date = Convert.ToDateTime(txtDate.Text);
+                _transactionViewModel.TotalValue = Convert.ToDecimal(txtTotalValue.Text);
+                var enu = cmbPaymentMethod.SelectedIndex;
+                _transactionViewModel.PaymentMethod = (PaymentMethod)enu;
+                if (_transactionViewModel is not null)
                 {
+                    if (_transactionViewModel.ID == Guid.Empty)
+                    {
 
-                    _transactionManager.CreateTransaction(_transactionViewModel);
+                        _transactionManager.CreateTransaction(_transactionViewModel);
+
+
+                    }
+                    else
+                    {
+                        _transactionManager.PutTransaction(_transactionViewModel);
+                    }
 
                 }
-                else
-                {
-                    _transactionManager.PutTransaction(_transactionViewModel);
-                }
+                this.Close();
+
             }
-            this.Close();
+            MessageBox.Show(this, "Please input a Line", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
+
 
         private async void cmbItemType_SelectedIndexChanged(object sender, EventArgs e)
         {
