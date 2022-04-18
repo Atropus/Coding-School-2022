@@ -33,7 +33,7 @@ namespace GoilGasStation.EF.Repositories
 
         public async Task<List<Transaction>> GetAllAsync()
         {
-            return await _context.Transactions.ToListAsync();
+            return await _context.Transactions.Include(x => x.TransactionLines).ThenInclude(y => y.Item).ToListAsync();
         }
 
         public async Task<Transaction?> GetByIdAsync(Guid id)
