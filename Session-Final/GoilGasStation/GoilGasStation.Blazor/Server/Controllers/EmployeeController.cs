@@ -74,7 +74,15 @@ namespace RedMotors.Blazor.Server.Controllers
         [HttpDelete("{id}")]
         public async Task Delete(Guid id)
         {
-            await _employeeRepo.DeleteAsync(id);
+            try
+            {
+                await _employeeRepo.DeleteAsync(id);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         }
 
         [HttpPut]

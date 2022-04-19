@@ -31,17 +31,17 @@
             this.components = new System.ComponentModel.Container();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.txtPrice = new System.Windows.Forms.TextBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.txtCode = new System.Windows.Forms.TextBox();
             this.lblPrice = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblCode = new System.Windows.Forms.Label();
-            this.txtCost = new System.Windows.Forms.TextBox();
             this.lblCost = new System.Windows.Forms.Label();
             this.cmbItemType = new System.Windows.Forms.ComboBox();
             this.lblItemType = new System.Windows.Forms.Label();
             this.bsItemSource = new System.Windows.Forms.BindingSource(this.components);
+            this.txtCost = new System.Windows.Forms.TextBox();
+            this.txtPrice = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.bsItemSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,13 +64,6 @@
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // txtPrice
-            // 
-            this.txtPrice.Location = new System.Drawing.Point(92, 103);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(164, 23);
-            this.txtPrice.TabIndex = 13;
             // 
             // txtDescription
             // 
@@ -113,13 +106,6 @@
             this.lblCode.TabIndex = 8;
             this.lblCode.Text = "Code";
             // 
-            // txtCost
-            // 
-            this.txtCost.Location = new System.Drawing.Point(92, 132);
-            this.txtCost.Name = "txtCost";
-            this.txtCost.Size = new System.Drawing.Size(164, 23);
-            this.txtCost.TabIndex = 17;
-            // 
             // lblCost
             // 
             this.lblCost.AutoSize = true;
@@ -146,18 +132,32 @@
             this.lblItemType.TabIndex = 21;
             this.lblItemType.Text = "Item Type";
             // 
+            // txtCost
+            // 
+            this.txtCost.Location = new System.Drawing.Point(92, 132);
+            this.txtCost.Name = "txtCost";
+            this.txtCost.Size = new System.Drawing.Size(164, 23);
+            this.txtCost.TabIndex = 17;
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(92, 103);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(164, 23);
+            this.txtPrice.TabIndex = 23;
+            // 
             // NewItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(279, 216);
+            this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.lblItemType);
             this.Controls.Add(this.cmbItemType);
             this.Controls.Add(this.txtCost);
             this.Controls.Add(this.lblCost);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.txtCode);
             this.Controls.Add(this.lblPrice);
@@ -178,16 +178,16 @@
 
         private Button btnCancel;
         private Button btnSave;
-        private TextBox txtPrice;
         private TextBox txtDescription;
         private TextBox txtCode;
         private Label lblPrice;
         private Label lblDescription;
         private Label lblCode;
-        private TextBox txtCost;
         private Label lblCost;
         private ComboBox cmbItemType;
         private Label lblItemType;
         private BindingSource bsItemSource;
+        private TextBox txtCost;
+        private TextBox txtPrice;
     }
 }

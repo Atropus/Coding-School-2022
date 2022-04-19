@@ -4,6 +4,7 @@
 @using GoilGasStation.Model.Entities
 @inject HttpClient httpClient
 @inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
 
 <h3>Item</h3>
 
@@ -16,7 +17,7 @@ else
     <div class="row">
         <div class="col-md-6">
             <label class="form-label">Code</label>
-            <input type="number" min= "10000" class="form-control" @bind="@ItemItem.Code" readonly/>
+            <input type="number" min="10000" class="form-control" @bind="@ItemItem.Code" readonly />
         </div>
         <div class="col-md-6">
             <label class="form-label">Description</label>
@@ -25,24 +26,24 @@ else
         <div class="col-md-6">
             <label class="form-label">Item Type</label>
             <EditForm class="mb-4" Model="@ItemItem">
-                <InputSelect @bind-Value="ItemItem.ItemType"> 
+                <InputSelect @bind-Value="ItemItem.ItemType">
                     <option value="-1">Select an Item Type..</option>
                     @foreach (var type in Enum.GetValues(typeof(ItemType)))
                     {
-                        <option value="@type">@type</option>
+                    <option value="@type">@type</option>
                     }
-                </InputSelect>
-            </EditForm>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Price</label>
-            <input type="number" min="0" class="form-control" @bind="@ItemItem.Price" />
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Cost</label>
-            <input type="number" min="0" class="form-control" @bind="@ItemItem.Cost" />
-        </div>
+            </InputSelect>
+        </EditForm>
     </div>
+    <div class="col-md-6">
+        <label class="form-label">Price</label>
+        <input type="number" min="0" class="form-control" @bind="@ItemItem.Price" />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Cost</label>
+        <input type="number" min="0" class="form-control" @bind="@ItemItem.Cost" />
+    </div>
+</div>
 
     <div class="row mt-2">
         <div class="col">
@@ -66,24 +67,33 @@ else
 
     protected async Task OnSave()
     {
-        HttpResponseMessage response;
-        if (ID == null)
+        if (ItemItem.Price >= 0 && ItemItem.Cost >= 0)
         {
-            response = await httpClient.PostAsJsonAsync("item", ItemItem);
+            HttpResponseMessage response;
+            if (ID == null)
+            {
+                response = await httpClient.PostAsJsonAsync("item", ItemItem);
+            }
+            else
+            {
+                response = await httpClient.PutAsJsonAsync("item", ItemItem);
+            }
+            response.EnsureSuccessStatusCode();
+            if (navigationManager.Uri.Contains("Staff"))
+            {
+                navigationManager.NavigateTo("/Staff/ItemList");
+            }
+            else
+            {
+                navigationManager.NavigateTo("ItemList");
+            }
         }
         else
         {
-            response = await httpClient.PutAsJsonAsync("item", ItemItem);
+            await jsRuntime.InvokeVoidAsync("window.alert", "Please check your inputs");
+            return;
         }
-        response.EnsureSuccessStatusCode();
-        if (navigationManager.Uri.Contains("Staff"))
-        {
-            navigationManager.NavigateTo("/Staff/ItemList");
-        }
-        else
-        {
-            navigationManager.NavigateTo("ItemList");
-        }
+
     }
 
     protected void OnCancel()

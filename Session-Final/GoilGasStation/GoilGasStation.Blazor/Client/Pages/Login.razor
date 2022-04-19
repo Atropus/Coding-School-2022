@@ -71,18 +71,22 @@
 
                         navigationManager.NavigateTo($"/{existinguser.EmployeeType}/CustomerList");
                     }
-                    if (existinguser.EmployeeType == EmployeeType.Staff)
+                    else if (existinguser.EmployeeType == EmployeeType.Staff)
                     {
 
                         navigationManager.NavigateTo($"/{existinguser.EmployeeType}/ItemList");
                     }
-                    if (existinguser.EmployeeType == EmployeeType.Manager)
+                    else if (existinguser.EmployeeType == EmployeeType.Manager)
                     {
 
                         navigationManager.NavigateTo($"/Index");
                     }
-                    await jsRuntime.InvokeVoidAsync("window.alert", "Please check Username or Password");
-                    return;
+                    else
+                    {
+                        await jsRuntime.InvokeVoidAsync("window.alert", "Please check Username or Password");
+                        return;
+                    }
+
                 }
 
             }

@@ -54,6 +54,8 @@ namespace GoilGasStation.Win
                 {
                     customerToolStripMenuItem.Enabled = false;
                     customerToolStripMenuItem.Visible = false;
+                    transactionToolStripMenuItem.Enabled = false;
+                    transactionToolStripMenuItem.Visible = false;
                 }
                 else if (currentemployee.EmployeeType.Equals(EmployeeType.Cashier))
                 {

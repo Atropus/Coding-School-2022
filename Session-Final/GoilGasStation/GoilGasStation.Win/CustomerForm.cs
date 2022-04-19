@@ -28,22 +28,29 @@ namespace GoilGasStation.Win
             NewCustomerForm form = new NewCustomerForm();
             form.ShowDialog();
             await RefreshData();
+            Refresh();
         }
 
         private async void CustomerForm_Load(object sender, EventArgs e)
         {
             grdCustomerList.ReadOnly = true;
             await RefreshData();
+            Refresh();
             
         }
-        private async Task RefreshData()
+
+        private void Refresh()
         {
-            grdCustomerList.DataSource = null;
-            grdCustomerList.DataSource = await _customerManager.GetCustomers();
             grdCustomerList.Update();
             grdCustomerList.Refresh();
             grdCustomerList.Columns["ID"].Visible = false;
 
+        }
+        private async Task RefreshData()
+        {
+            var test = await _customerManager.GetCustomers();
+            grdCustomerList.DataSource = null;
+            grdCustomerList.DataSource = test;
         }
 
         private async void btnEditCustomer_Click(object sender, EventArgs e)
@@ -56,17 +63,24 @@ namespace GoilGasStation.Win
             customerEdit.ShowDialog();
 
             await RefreshData();
+            Refresh();
         }
 
         private async void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
             if (grdCustomerList.SelectedRows.Count != 1)
                 return;
-
-            var customer = (CustomerViewModel)grdCustomerList.SelectedRows[index: 0].DataBoundItem;
-            _customerManager.DeleteCustomer(customer);
-
+            try
+            {
+                var customer = (CustomerViewModel)grdCustomerList.SelectedRows[index: 0].DataBoundItem;
+                await _customerManager.DeleteCustomer(customer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             await RefreshData();
+            Refresh();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

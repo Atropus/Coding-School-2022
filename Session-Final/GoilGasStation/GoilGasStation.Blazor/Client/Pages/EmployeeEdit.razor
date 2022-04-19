@@ -2,6 +2,7 @@
 @using global::GoilGasStation.Blazor.Shared.ViewModels
 @inject HttpClient httpClient
 @inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
 
 <h3>Employee</h3>
 
@@ -23,36 +24,36 @@ else
         <div class="col-md-6">
             <label class="form-label">Employee Type</label>
             <EditForm class="mb-4" Model="@EmployeeItem">
-                <InputSelect @bind-Value="EmployeeItem.EmployeeType"> 
+                <InputSelect @bind-Value="EmployeeItem.EmployeeType">
                     <option value="-1">Select an Employee Type..</option>
                     @foreach (var type in Enum.GetValues(typeof(EmployeeType)))
                     {
-                        <option value="@type">@type</option>
+                    <option value="@type">@type</option>
                     }
-                </InputSelect>
-            </EditForm>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Salary Per Month</label>
-            <input class="form-control" @bind="@EmployeeItem.SalaryPerMonth" />
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Hire Date</label>
-            <input type="date" class="form-control" @bind="@EmployeeItem.HireDateStart" />
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">End Date</label>
-            <input type="date" class="form-control" @bind="@EmployeeItem.HireDateEnd" />
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Username</label>
-            <input class="form-control" @bind="@EmployeeItem.Username"/>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Password</label>
-            <input class="form-control" @bind="@EmployeeItem.Password"/>
-        </div>
+            </InputSelect>
+        </EditForm>
     </div>
+    <div class="col-md-6">
+        <label type="number" min="0" class="form-label">Salary Per Month</label>
+        <input class="form-control" @bind="@EmployeeItem.SalaryPerMonth" />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Hire Date</label>
+        <input type="date" class="form-control" @bind="@EmployeeItem.HireDateStart" />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">End Date</label>
+        <input type="date" class="form-control" @bind="@EmployeeItem.HireDateEnd" />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Username</label>
+        <input class="form-control" @bind="@EmployeeItem.Username" />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Password</label>
+        <input class="form-control" @bind="@EmployeeItem.Password" />
+    </div>
+</div>
 
     <div class="row mt-2">
         <div class="col">
@@ -75,17 +76,26 @@ else
 
     protected async Task OnSave()
     {
-        HttpResponseMessage response;
-        if (ID == null)
+        if (EmployeeItem.SalaryPerMonth >= 0 && EmployeeItem.EmployeeType >=0)
         {
-            response = await httpClient.PostAsJsonAsync("employee", EmployeeItem);
+            HttpResponseMessage response;
+            if (ID == null)
+            {
+                response = await httpClient.PostAsJsonAsync("employee", EmployeeItem);
+            }
+            else
+            {
+                response = await httpClient.PutAsJsonAsync("employee", EmployeeItem);
+            }
+            response.EnsureSuccessStatusCode();
+            navigationManager.NavigateTo("employeelist");
         }
         else
         {
-            response = await httpClient.PutAsJsonAsync("employee", EmployeeItem);
+            await jsRuntime.InvokeVoidAsync("window.alert", "Please check your inputs");
+            return;
         }
-        response.EnsureSuccessStatusCode();
-        navigationManager.NavigateTo("employeelist");
+
     }
 
     protected void OnCancel()

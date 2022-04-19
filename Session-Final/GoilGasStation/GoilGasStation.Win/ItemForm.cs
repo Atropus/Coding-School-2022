@@ -27,7 +27,7 @@ namespace GoilGasStation.Win
         {
             NewItemForm form = new NewItemForm();
             form.ShowDialog();
-            grdItemList.DataSource = null;
+            //grdItemList.DataSource = null;
             await RefreshData();
             Refresh();
         }
@@ -42,6 +42,7 @@ namespace GoilGasStation.Win
         private async Task RefreshData()
         {
             var test = await _itemManager.GetItems();
+            grdItemList.DataSource = null;
             grdItemList.DataSource = test;
 
 
@@ -71,10 +72,15 @@ namespace GoilGasStation.Win
         {
             if (grdItemList.SelectedRows.Count != 1)
                 return;
-
-            var item = (ItemViewModel)grdItemList.SelectedRows[index: 0].DataBoundItem;
-            _itemManager.DeleteItem(item);
-
+            try
+            {
+                var item = (ItemViewModel)grdItemList.SelectedRows[index: 0].DataBoundItem;
+                await _itemManager.DeleteItem(item);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             await RefreshData();
             Refresh();
         }

@@ -37,12 +37,12 @@ namespace GoilGasStation.Win
                 if (_customerViewModel.ID == Guid.Empty)
                 {
 
-                    _customerManager.CreateCustomer(_customerViewModel);
+                    await _customerManager.CreateCustomer(_customerViewModel);
                     
                 }
                 else
                 {
-                    _customerManager.PutCustomer(_customerViewModel);
+                    await _customerManager.PutCustomer(_customerViewModel);
                 }
                 this.Close();
                 

@@ -46,11 +46,11 @@ namespace RedMotors.Blazor.Server.Controllers
             else
             {
                 var itemlist = await _itemRepo.GetAllAsync();
-                if(itemlist.Count() != 0)
+                if (itemlist.Count() != 0)
                 {
                     var maxCode = itemlist.Max(c => c.Code);
                     //var existingItem= await _itemRepo.GetByIdAsync(itemlist[0].ID);
-                    model.Code = maxCode +1;
+                    model.Code = maxCode + 1;
                 }
                 else
                 {
@@ -77,7 +77,14 @@ namespace RedMotors.Blazor.Server.Controllers
         [HttpDelete("{id}")]
         public async Task Delete(Guid id)
         {
-            await _itemRepo.DeleteAsync(id);
+            try
+            {
+                await _itemRepo.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         [HttpPut]

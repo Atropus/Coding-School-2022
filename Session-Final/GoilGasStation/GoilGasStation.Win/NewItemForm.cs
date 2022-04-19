@@ -25,31 +25,30 @@ namespace GoilGasStation.Win
             InitializeComponent();
             _itemManager = new ItemManager();
             this.CenterToParent();
-
         }
         public NewItemForm(ItemViewModel item) : this()
         {
             _itemViewModel = item;
         }
-
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            if (txtCode.Text is not null && txtDescription.Text is not null && txtPrice.Text is not null && txtCost.Text is not null && cmbItemType.SelectedIndex >= 0)
+            if (Convert.ToDecimal(txtPrice.Text) > 0 && (Convert.ToDecimal(txtCost.Text) > 0))
             {
-                if (_itemViewModel.ID == Guid.Empty)
+                if (txtCode.Text is not null && txtDescription.Text is not null && txtPrice.Text is not null && txtCost.Text is not null && cmbItemType.SelectedIndex >= 0)
                 {
-                    _itemManager.CreateItem(_itemViewModel);
+                    if (_itemViewModel.ID == Guid.Empty)
+                    {
+                        await _itemManager.CreateItem(_itemViewModel);
+                    }
+                    else
+                    {
+                        await _itemManager.PutItem(_itemViewModel);
+                    }
+                    this.Close();
                 }
-                else
-                {
-                    _itemManager.PutItem(_itemViewModel);
-                }
-                this.Close();
-
-
+                else MessageBox.Show("Please fill all the fields properly");
             }
             else MessageBox.Show("Please fill all the fields properly");
-
         }
         private void SetDataBindings()
         {
@@ -57,8 +56,8 @@ namespace GoilGasStation.Win
             txtDescription.DataBindings.Add(new Binding("Text", bsItemSource, "Description", true));
             cmbItemType.DataSource = Enum.GetValues(typeof(ItemType));
             cmbItemType.DataBindings.Add(new Binding("Text", bsItemSource, "ItemType", true));
-            cmbItemType.SelectedIndex = -1;
-            cmbItemType.Text = "Please choose a type...";
+            //cmbItemType.SelectedIndex = -1;
+            //cmbItemType.Text = "Please choose a type...";
             txtPrice.DataBindings.Add(new Binding("Text", bsItemSource, "Price", true));
             txtCost.DataBindings.Add(new Binding("Text", bsItemSource, "Cost", true));
 
@@ -66,7 +65,6 @@ namespace GoilGasStation.Win
 
         private async void NewItemForm_Load(object sender, EventArgs e)
         {
-
             txtCode.ReadOnly = true;
             if (_itemViewModel == null)
             {
@@ -84,14 +82,11 @@ namespace GoilGasStation.Win
                     _itemViewModel.Code = 10001;
                     txtCode.Text = "10001";
                 }
-
             }
             bsItemSource.DataSource = _itemViewModel;
             SetDataBindings();
 
         }
-
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();

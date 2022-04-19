@@ -26,6 +26,7 @@ namespace GoilGasStation.Win
         private EmployeeViewModel _employeeViewModel;
         private EmployeeManager _employeeManager = new();
         private Guid _employeeID;
+        private bool loading = false;
 
         public TransactionForm(Guid employeeID)
         {
@@ -50,6 +51,7 @@ namespace GoilGasStation.Win
             spinQuantity.Minimum = 0;
 
             SetDataBinding();
+            loading = true;
         }
         private async void SetDataBinding()
         {
@@ -105,7 +107,6 @@ namespace GoilGasStation.Win
 
             else return false;
         }
-
         private async void txtCardNumber_KeyPress(object sender, KeyPressEventArgs e)
         {
             txtCustomerName.Text = String.Empty;
@@ -140,14 +141,11 @@ namespace GoilGasStation.Win
                     }
                 }
             }
-
         }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             decimal netValueTotal = 0.00M;
@@ -194,7 +192,6 @@ namespace GoilGasStation.Win
             RefreshTransLineData();
             RefreshTransData();
         }
-
         private void btnDelete_Click(object sender, EventArgs e)
         {
             decimal netValueTotal = 0.00M;
@@ -259,11 +256,10 @@ namespace GoilGasStation.Win
             RefreshTransLineData();
             RefreshTransData();
         }
-
         private async void cmbDescription_SelectedIndexChanged(object sender, EventArgs e)
         {
             //txtCode.Text = String.Empty;
-            ////cmbItemType.SelectedIndex = 0;
+            //cmbItemType.SelectedIndex = 0;
             spinQuantity.Value = 1;
             //txtPrice.Text = String.Empty;
 
@@ -276,42 +272,45 @@ namespace GoilGasStation.Win
                 _itemViewModel.Price = item.FirstOrDefault(i => i.ID != Guid.Empty).Price;
             }
         }
-
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            if (txtTotalValue.Text != "0" || txtNetValue.Text != "")
+            if (txtUserName.Text != "" && txtUserSurname.Text != "")
             {
-                _transactionViewModel.Date = Convert.ToDateTime(txtDate.Text);
-                _transactionViewModel.TotalValue = Convert.ToDecimal(txtTotalValue.Text);
-                var enu = cmbPaymentMethod.SelectedIndex;
-                _transactionViewModel.PaymentMethod = (PaymentMethod)enu;
-                if (_transactionViewModel is not null)
+                if (txtTotalValue.Text != "0" || txtNetValue.Text != "")
                 {
-                    if (_transactionViewModel.ID == Guid.Empty)
+                    _transactionViewModel.Date = Convert.ToDateTime(txtDate.Text);
+                    _transactionViewModel.TotalValue = Convert.ToDecimal(txtTotalValue.Text);
+                    var enu = cmbPaymentMethod.SelectedIndex;
+                    _transactionViewModel.PaymentMethod = (PaymentMethod)enu;
+                    if (_transactionViewModel is not null)
                     {
-                        _transactionManager.CreateTransaction(_transactionViewModel);
+                        if (_transactionViewModel.ID == Guid.Empty)
+                        {
+                            _transactionManager.CreateTransaction(_transactionViewModel);
+                        }
+                        else
+                        {
+                            _transactionManager.PutTransaction(_transactionViewModel);
+                        }
                     }
-                    else
-                    {
-                        _transactionManager.PutTransaction(_transactionViewModel);
-                    }
+                    this.Close();
                 }
-                this.Close();
+                else
+                {
+                    MessageBox.Show(this, "Please input a Line", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
             else
             {
-                MessageBox.Show(this, "Please input a Line", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(this, "You can't Save without a User", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
             
         }
-
-
         private async void cmbItemType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //txtCode.Text = String.Empty;
+        {           
             cmbDescription.DataSource = null;
-            //spinQuantity.Value = 1;
-            //txtPrice.Text = String.Empty;
+            spinQuantity.Value = 1;
 
             var itemlist = await _itemManager.GetItems();
             var item = itemlist.Where(i => (int)i.ItemType == cmbItemType.SelectedIndex).ToList();
